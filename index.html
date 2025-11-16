@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>مكتبة الأنمي والمانغا</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snoy Library</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="topbar">
-<button id="menuBtn">☰</button>
-<h1 class="logo">Manga Library</h1>
-<input type="text" id="searchBox" placeholder="ابحث عن كتاب أو مانغا..." />
-<button id="loginBtn">تسجيل الدخول</button>
-</div>
 
+  <!-- الشريط العلوي -->
+  <header class="topbar">
+    <div class="logo" onclick="goHome()">
+      <img src="assets/logo.png" alt="logo">
+    </div>
+    <input type="text" id="searchInput" placeholder="ابحث عن كتاب أو مانغا...">
+    <button class="login-btn">تسجيل الدخول</button>
+  </header>
 
-<aside id="sidebar" class="sidebar">
-<a href="index.html">🏠 الرئيسية</a>
-<a href="books.html">📚 الكتب</a>
-<a href="manga.html">📖 المانغا</a>
-<a href="favorites.html">⭐ المفضلة</a>
-<a href="account.html">👤 حسابي</a>
-</aside>
+  <!-- القائمة الجانبية -->
+  <aside class="sidebar">
+    <button onclick="showBooks()">📚 الكتب</button>
+    <button onclick="showManga()">📖 المانغا</button>
+    <button onclick="showFavorites()">⭐ المفضلة</button>
+  </aside>
 
+  <!-- المحتوى -->
+  <main id="content">
+    <h1 class="welcome">أهلاً بك في مكتبة Snoy</h1>
+    <p class="welcome-sub">اختر كتابًا أو مانغا من القائمة.</p>
+  </main>
 
-<main>
-<h2>أهلاً بك في مكتبة الكتب والمانغا</h2>
-<p>اختر كتابًا أو مانغا من القوائم</p>
-</main>
-
-
-<script src="firebase.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
