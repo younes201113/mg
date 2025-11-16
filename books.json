@@ -1,10 +1,12 @@
-{
-  "id": 1,
-  "title": "الانسان بعد التحديث",
-  "author": "يونس",
-  "cover": "books/default.jpg", 
-  "pages": 250,
-  "rating": 4.5⭐,
-  "type": "book",
-  "files": { "pdf": "https://drive.google.com/uc?export=download&id=1TKjM3EUyIkSYfHJ0m1eIGYL2gtTLk6DJ" }
-}
+[
+  {
+    "id": 1,
+    "title": "كتابي الأول",
+    "author": "اسم المؤلف",
+    "cover": "books/default.jpg",
+    "pages": 250,
+    "rating": 0,
+    "type": "book",
+    "files": { "pdf": "https://drive.google.com/uc?export=download&id=1TKjM3EUyIkSYfHJ0m1eIGYL2gtTLk6DJ" }
+  }
+]
