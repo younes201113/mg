@@ -1,61 +1,98 @@
 body {
-margin: 0;
-background: #110225;
-color: white;
-font-family: sans-serif;
+  margin: 0;
+  background: #110225;
+  font-family: "Cairo", sans-serif;
+  color: white;
 }
 
-
+/* الشريط العلوي */
 .topbar {
-background: #1b043f;
-padding: 12px;
-display: flex;
-align-items: center;
-gap: 15px;
-box-shadow: 0 0 10px #6b2fef;
+  display: flex;
+  align-items: center;
+  background: #1a0335;
+  padding: 10px 20px;
+  gap: 15px;
 }
 
-
-#searchBox {
-flex: 1;
-padding: 8px;
-border-radius: 6px;
-border: none;
-background: #2a0f40;
-color: white;
+.topbar img {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
 }
 
-
-#loginBtn {
-background: #6b2fef;
-border: none;
-padding: 10px 15px;
-border-radius: 8px;
-color: white;
+.topbar input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #3b176b;
+  color: white;
 }
 
+/* زر الدخول */
+.login-btn {
+  background: #7b2cbf;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
+/* القائمة الجانبية */
 .sidebar {
-position: fixed;
-top: 0;
-left: -250px;
-width: 250px;
-height: 100%;
-background: #1b043f;
-padding-top: 60px;
-transition: 0.3s;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 160px;
+  height: 100%;
+  background: #1a0335;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
 }
 
-
-.sidebar a {
-display: block;
-padding: 15px;
-color: white;
-text-decoration: none;
-border-bottom: 1px solid #2a0f40;
+.sidebar button {
+  background: none;
+  border: none;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  color: #c7a4ff;
+  cursor: pointer;
 }
 
+.sidebar button:hover {
+  background: #3b176b;
+}
 
-.sidebar a:hover {
-background: #6b2fef;
+/* المحتوى */
+main {
+  margin-right: 180px;
+  padding: 20px;
+}
+
+.welcome {
+  text-align: center;
+  font-size: 32px;
+}
+.welcome-sub {
+  text-align: center;
+  color: #b8a2d6;
+}
+
+/* بطاقة الكتاب */
+.book-card {
+  background: #1a0335;
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+  display: inline-block;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.book-card img {
+  width: 100%;
+  border-radius: 10px;
 }
