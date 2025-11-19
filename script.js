@@ -348,7 +348,7 @@ function readManga(id) {
   mangaView.innerHTML = `
     <div class="manga-reader">
       <div class="reader-header">
-        <button class="back-btn" onclick="openMangaDetail(${manga.id})">← العودة</button>
+        <button class="back-btn" onclick="showMangaOnly()">← العودة</button>
         <h2>${manga.title}</h2>
       </div>
       <div class="manga-pages-container">
