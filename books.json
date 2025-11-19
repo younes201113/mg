@@ -7,9 +7,23 @@
     "pages": 290,
     "rating": 3.9,
     "type": "book",
-    "files": { "pdf": "https://drive.google.com/uc?export=download&id=1TKjM3EUyIkSYfHJ0m1eIGYL2gtTLk6DJ" }
-  }
-{
+    "files": {
+      "pdf": "https://drive.google.com/uc?export=download&id=1TKjM3EUyIkSYfHJ0m1eIGYL2gtTLk6DJ"
+    }
+  },
+  {
+    "id": 2,
+    "title": "القراءة السريعة",
+    "author": "بيتر كمب",
+    "cover": "https://via.placeholder.com/200x300/4ECDC4/white?text=القراءة+السريعة",
+    "pages": 180,
+    "rating": 4.2,
+    "type": "book",
+    "files": {
+      "pdf": "https://example.com/book2.pdf"
+    }
+  },
+  {
     "id": 100,
     "title": "فصل النخبة - الفصل 1: البداية",
     "author": "فريق النخبة",
