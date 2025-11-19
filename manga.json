@@ -1,12 +1,25 @@
 [
   {
-    "id": "test",
-    "title": "Test Manga",
-    "cover": "manga/test/cover.jpg",
+    "id": "white-dragon-duke",
     "type": "manga",
+    "title": "White Dragon Duke: Pendragon",
+    "cover": "covers/pendragon.jpg",
     "chapters": [
-      { "num": 1, "path": "manga/test/ch1/" },
-      { "num": 2, "path": "manga/test/ch2/" }
+      {
+        "num": 1,
+        "pages": [
+          "manga/pendragon/ch1/1.jpg",
+          "manga/pendragon/ch1/2.jpg",
+          "manga/pendragon/ch1/3.jpg"
+        ]
+      },
+      {
+        "num": 2,
+        "pages": [
+          "manga/pendragon/ch2/1.jpg",
+          "manga/pendragon/ch2/2.jpg"
+        ]
+      }
     ]
   }
 ]
