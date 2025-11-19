@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قارئ المانغا</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         .manga-reader {
             text-align: center;
@@ -117,7 +117,7 @@
         const mangaId = urlParams.get('id') || '1';
         
         let currentPage = 1;
-        const totalPages = 3; // يمكن تغيير هذا الرقم حسب عدد الصفحات
+        const totalPages = 3;
 
         // عناصر DOM
         const mangaImage = document.getElementById('manga-image');
@@ -132,7 +132,7 @@
 
         function updatePage() {
             // تحديث صورة المانغا
-            mangaImage.src = `images/manga${mangaId}/page${currentPage}.jpg`;
+            mangaImage.src = `manga${mangaId}-page${currentPage}.jpg`;
             
             // تحديث معلومات الصفحة
             pageInfo.textContent = `الصفحة ${currentPage} من ${totalPages}`;
