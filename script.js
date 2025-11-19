@@ -340,59 +340,24 @@ function readManga(id) {
   
   const pages = manga.files?.pages || [];
   
+  // عرض كل الصور بشكل أفقي
+  const pagesHTML = pages.map(page => 
+    `<img class="manga-page" src="${page}" alt="صفحة المانغا">`
+  ).join('');
+  
   mangaView.innerHTML = `
     <div class="manga-reader">
       <div class="reader-header">
         <button class="back-btn" onclick="openMangaDetail(${manga.id})">← العودة</button>
         <h2>${manga.title}</h2>
       </div>
-      <div class="reader-controls">
-        <button class="nav-btn" onclick="prevMangaPage()" id="prevMangaBtn">السابق</button>
-        <span class="page-info">الصفحة <span id="currentMangaPage">1</span> من ${pages.length}</span>
-        <button class="nav-btn" onclick="nextMangaPage()" id="nextMangaBtn">التالي</button>
-      </div>
-      <div class="manga-page-container">
-        <img id="mangaPageImage" class="manga-page" src="${pages[0]}" alt="صفحة المانغا">
-      </div>
-      <div class="reader-controls">
-        <button class="nav-btn" onclick="prevMangaPage()">السابق</button>
-        <span class="page-info">الصفحة <span id="currentMangaPageBottom">1</span> من ${pages.length}</span>
-        <button class="nav-btn" onclick="nextMangaPage()">التالي</button>
+      <div class="manga-pages-container">
+        ${pagesHTML}
       </div>
     </div>
   `;
   
   document.getElementById('content').appendChild(mangaView);
-  
-  // حفظ بيانات المانغا الحالية
-  window.currentManga = manga;
-  window.currentMangaPage = 1;
-  window.currentMangaPages = pages;
-}
-
-// دوال التنقل في المانغا
-function nextMangaPage() {
-  if (window.currentManga && window.currentMangaPage < window.currentMangaPages.length) {
-    window.currentMangaPage++;
-    updateMangaPage();
-  }
-}
-
-function prevMangaPage() {
-  if (window.currentManga && window.currentMangaPage > 1) {
-    window.currentMangaPage--;
-    updateMangaPage();
-  }
-}
-
-function updateMangaPage() {
-  document.getElementById('currentMangaPage').textContent = window.currentMangaPage;
-  document.getElementById('currentMangaPageBottom').textContent = window.currentMangaPage;
-  document.getElementById('mangaPageImage').src = window.currentMangaPages[window.currentMangaPage - 1];
-  
-  // تحديث حالة الأزرار
-  document.getElementById('prevMangaBtn').disabled = window.currentMangaPage === 1;
-  document.getElementById('nextMangaBtn').disabled = window.currentMangaPage === window.currentMangaPages.length;
 }
 
 /* ----- start ----- */
