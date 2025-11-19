@@ -1,91 +1,210 @@
-body {
-    background: #0e1217;
-    color: white;
+* {
     margin: 0;
-    font-family: sans-serif;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Sidebar */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* الشريط الجانبي */
 .sidebar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 180px;
-    height: 100%;
-    background: #1c2331;
-    padding: 20px;
-}
-
-.sidebar button {
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 12px;
-    background: #2a3245;
-    border: none;
+    width: 250px;
+    background: #2c3e50;
     color: white;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 6px;
+    padding: 20px 0;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
 }
 
-.sidebar button:hover {
-    background: #3b465c;
+.logo {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #34495e;
+    margin-bottom: 20px;
 }
 
-/* Views */
-.view {
-    margin-right: 200px;
+.logo h2 {
+    color: #3498db;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin: 5px 0;
+}
+
+.menu a {
+    display: block;
+    padding: 15px 25px;
+    color: #ecf0f1;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-right: 3px solid transparent;
+}
+
+.menu a:hover {
+    background: #34495e;
+    border-right: 3px solid #3498db;
+    color: #3498db;
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+    flex: 1;
+    margin-right: 250px;
     padding: 20px;
 }
 
-.hidden {
-    display: none;
-}
-
-/* Grid items */
-#grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-}
-
-.grid-item {
-    background: #1b202a;
-    padding: 10px;
-    border-radius: 8px;
+.header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
     text-align: center;
 }
 
-.grid-item img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-radius: 6px;
+.header h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-.grid-item button {
-    padding: 10px;
-    margin-top: 10px;
-    width: 100%;
-    background: #39425a;
-    border: none;
+.search-bar {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px 0 0 8px;
+    font-size: 16px;
+}
+
+.search-bar button {
+    padding: 12px 25px;
+    background: #3498db;
     color: white;
+    border: none;
+    border-radius: 0 8px 8px 0;
     cursor: pointer;
-    border-radius: 6px;
+    font-size: 16px;
 }
 
-/* Manga pages */
-.cover {
-    display: block;
-    width: 200px;
-    margin: auto;
+/* الأقسام */
+.section {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
 }
 
-#pages img {
+.section h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+/* شبكة العناصر */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.item-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.item-image img {
     width: 100%;
-    max-width: 900px;
-    display: block;
-    margin: 20px auto;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.item:hover .item-image img {
+    transform: scale(1.05);
+}
+
+.item-info {
+    padding: 20px;
+}
+
+.item-info h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.item-info p {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.item-info button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
     border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.item-info button:hover {
+    background: #2980b9;
+}
+
+/* التجاوب مع الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .main-content {
+        margin-right: 0;
+    }
+    
+    .container {
+        flex-direction: column;
+    }
+    
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
 }
