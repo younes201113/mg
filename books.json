@@ -9,4 +9,62 @@
     "type": "book",
     "files": { "pdf": "https://drive.google.com/uc?export=download&id=1TKjM3EUyIkSYfHJ0m1eIGYL2gtTLk6DJ" }
   }
+},
+{
+    "id": 100,
+    "title": "فصل النخبة - الفصل 1: البداية",
+    "author": "فريق النخبة",
+    "cover": "https://via.placeholder.com/200x300/2C3E50/white?text=فصل+النخبة+1",
+    "pages": 24,
+    "rating": 4.7,
+    "type": "manga",
+    "files": {
+      "pages": [
+        "https://via.placeholder.com/600x800/2C3E50/white?text=فصل+النخبة+1\\nالصفحة+1",
+        "https://via.placeholder.com/600x800/34495E/white?text=فصل+النخبة+1\\nالصفحة+2",
+        "https://via.placeholder.com/600x800/16A085/white?text=فصل+النخبة+1\\nالصفحة+3",
+        "https://via.placeholder.com/600x800/27AE60/white?text=فصل+النخبة+1\\nالصفحة+4",
+        "https://via.placeholder.com/600x800/2980B9/white?text=فصل+النخبة+1\\nالصفحة+5"
+      ]
+    }
+  },
+  {
+    "id": 101,
+    "title": "فصل النخبة - الفصل 2: الاختبار",
+    "author": "فريق النخبة", 
+    "cover": "https://via.placeholder.com/200x300/E74C3C/white?text=فصل+النخبة+2",
+    "pages": 28,
+    "rating": 4.8,
+    "type": "manga",
+    "files": {
+      "pages": [
+        "https://via.placeholder.com/600x800/E74C3C/white?text=فصل+النخبة+2\\nالصفحة+1",
+        "https://via.placeholder.com/600x800/C0392B/white?text=فصل+النخبة+2\\nالصفحة+2",
+        "https://via.placeholder.com/600x800/D35400/white?text=فصل+النخبة+2\\nالصفحة+3",
+        "https://via.placeholder.com/600x800/E67E22/white?text=فصل+النخبة+2\\nالصفحة+4",
+        "https://via.placeholder.com/600x800/F39C12/white?text=فصل+النخبة+2\\nالصفحة+5",
+        "https://via.placeholder.com/600x800/F1C40F/white?text=فصل+النخبة+2\\nالصفحة+6"
+      ]
+    }
+  },
+  {
+    "id": 102, 
+    "title": "فصل النخبة - الفصل 3: المواجهة",
+    "author": "فريق النخبة",
+    "cover": "https://via.placeholder.com/200x300/8E44AD/white?text=فصل+النخبة+3",
+    "pages": 32,
+    "rating": 4.9,
+    "type": "manga",
+    "files": {
+      "pages": [
+        "https://via.placeholder.com/600x800/8E44AD/white?text=فصل+النخبة+3\\nالصفحة+1",
+        "https://via.placeholder.com/600x800/9B59B6/white?text=فصل+النخبة+3\\nالصفحة+2",
+        "https://via.placeholder.com/600x800/A569BD/white?text=فصل+النخبة+3\\nالصفحة+3",
+        "https://via.placeholder.com/600x800/BB8FCE/white?text=فصل+النخبة+3\\nالصفحة+4",
+        "https://via.placeholder.com/600x800/D2B4DE/white?text=فصل+النخبة+3\\nالصفحة+5",
+        "https://via.placeholder.com/600x800/E8DAEF/white?text=فصل+النخبة+3\\nالصفحة+6",
+        "https://via.placeholder.com/600x800/F4ECF7/white?text=فصل+النخبة+3\\nالصفحة+7"
+      ]
+    }
+  }
 ]
