@@ -1,0 +1,12 @@
+[
+  {
+    "id": "test",
+    "title": "Test Manga",
+    "cover": "manga/test/cover.jpg",
+    "type": "manga",
+    "chapters": [
+      { "num": 1, "path": "manga/test/ch1/" },
+      { "num": 2, "path": "manga/test/ch2/" }
+    ]
+  }
+]
