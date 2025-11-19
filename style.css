@@ -166,6 +166,10 @@ main{
   display: flex;
   align-items: center;
   gap: 15px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .reader-header .back-btn {
@@ -177,36 +181,13 @@ main{
   cursor: pointer;
 }
 
-.reader-controls {
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-}
-
-.reader-controls .nav-btn {
-  padding: 10px 20px;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.reader-controls .nav-btn:disabled {
-  background: #6c757d;
-  cursor: not-allowed;
-}
-
-.manga-page-container {
-  margin: 20px auto;
-  max-width: 800px;
+.manga-pages-container {
+  margin-top: 80px; /* علشان ما يختفي تحت الهيدر */
 }
 
 .manga-page {
   max-width: 100%;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  display: block;
+  margin: 0 auto;
 }
