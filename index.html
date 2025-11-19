@@ -2,31 +2,96 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Snoy Library</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع المانغا والكتب</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="container">
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>مكتبتي</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="#" onclick="showAll()">الرئيسية</a></li>
+                <li><a href="#" onclick="showMangaOnly()">المانغا</a></li>
+                <li><a href="#" onclick="showBooksOnly()">الكتب</a></li>
+                <li><a href="#">المفضلة</a></li>
+                <li><a href="#">حسابي</a></li>
+            </ul>
+        </div>
 
-    <div class="sidebar">
-        <button onclick="showHome()">🏠 الرئيسية</button>
-        <button onclick="showBooks()">📚 الكتب</button>
-        <button onclick="showManga()">📘 المانغا</button>
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            <header class="header">
+                <h1>مرحباً بك في مكتبتي</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="ابحث عن مانغا أو كتاب...">
+                    <button>بحث</button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- قسم المانغا -->
+                <section class="section" id="manga-section">
+                    <h2>المانغا</h2>
+                    <div class="items-grid">
+                        <div class="item manga-item">
+                            <div class="item-image">
+                                <img src="images/manga1/cover.jpg" alt="مانغا 1">
+                            </div>
+                            <div class="item-info">
+                                <h3>مانغا 1</h3>
+                                <p>وصف المانغا الأولى</p>
+                                <button onclick="location.href='manga.html?id=1'">قراءة</button>
+                            </div>
+                        </div>
+
+                        <div class="item manga-item">
+                            <div class="item-image">
+                                <img src="images/manga2/cover.jpg" alt="مانغا 2">
+                            </div>
+                            <div class="item-info">
+                                <h3>مانغا 2</h3>
+                                <p>وصف المانغا الثانية</p>
+                                <button onclick="location.href='manga.html?id=2'">قراءة</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم الكتب -->
+                <section class="section" id="books-section">
+                    <h2>الكتب</h2>
+                    <div class="items-grid">
+                        <div class="item book-item">
+                            <div class="item-image">
+                                <img src="images/book1.jpg" alt="كتاب 1">
+                            </div>
+                            <div class="item-info">
+                                <h3>كتاب 1</h3>
+                                <p>وصف الكتاب الأول</p>
+                                <button onclick="location.href='pdf-viewer.html?file=books/book1.pdf'">قراءة</button>
+                            </div>
+                        </div>
+
+                        <div class="item book-item">
+                            <div class="item-image">
+                                <img src="images/book2.jpg" alt="كتاب 2">
+                            </div>
+                            <div class="item-info">
+                                <h3>كتاب 2</h3>
+                                <p>وصف الكتاب الثاني</p>
+                                <button onclick="location.href='pdf-viewer.html?file=books/book2.pdf'">قراءة</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 
-    <div id="homeView" class="view">
-        <h1>المكتبة</h1>
-        <div id="grid"></div>
-    </div>
-
-    <div id="mangaView" class="view hidden">
-        <img id="mangaCover" class="cover">
-        <h2 id="mangaTitle"></h2>
-
-        <select id="chapterSelect"></select>
-
-        <div id="pages"></div>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
