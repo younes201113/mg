@@ -12,32 +12,20 @@
     }
   },
   {
-    "id": 2,
-    "title": "القراءة السريعة",
-    "author": "بيتر كمب",
-    "cover": "https://via.placeholder.com/200x300/4ECDC4/white?text=القراءة+السريعة",
-    "pages": 180,
-    "rating": 4.2,
-    "type": "book",
-    "files": {
-      "pdf": "https://example.com/book2.pdf"
-    }
-  },
-  {
     "id": 100,
     "title": "فصل النخبة - الفصل 1: البداية",
     "author": "فريق النخبة",
-    "cover": "https://via.placeholder.com/200x300/2C3E50/white?text=فصل+النخبة+1",
-    "pages": 24,
+    "cover": "https://i.imgur.com/3JQ2W8a.png",
+    "pages": 5,
     "rating": 4.7,
     "type": "manga",
     "files": {
       "pages": [
-        "https://via.placeholder.com/600x800/2C3E50/white?text=فصل+النخبة+1\\nالصفحة+1",
-        "https://via.placeholder.com/600x800/34495E/white?text=فصل+النخبة+1\\nالصفحة+2",
-        "https://via.placeholder.com/600x800/16A085/white?text=فصل+النخبة+1\\nالصفحة+3",
-        "https://via.placeholder.com/600x800/27AE60/white?text=فصل+النخبة+1\\nالصفحة+4",
-        "https://via.placeholder.com/600x800/2980B9/white?text=فصل+النخبة+1\\nالصفحة+5"
+        "https://i.imgur.com/8z6V9r2.png",
+        "https://i.imgur.com/9xL3m4R.png", 
+        "https://i.imgur.com/7yP2q1T.png",
+        "https://i.imgur.com/5nB8c4X.png",
+        "https://i.imgur.com/2vR9d8Z.png"
       ]
     }
   },
@@ -45,18 +33,17 @@
     "id": 101,
     "title": "فصل النخبة - الفصل 2: الاختبار",
     "author": "فريق النخبة", 
-    "cover": "https://via.placeholder.com/200x300/E74C3C/white?text=فصل+النخبة+2",
-    "pages": 28,
+    "cover": "https://i.imgur.com/4pK9bLr.png",
+    "pages": 5,
     "rating": 4.8,
     "type": "manga",
     "files": {
       "pages": [
-        "https://via.placeholder.com/600x800/E74C3C/white?text=فصل+النخبة+2\\nالصفحة+1",
-        "https://via.placeholder.com/600x800/C0392B/white?text=فصل+النخبة+2\\nالصفحة+2",
-        "https://via.placeholder.com/600x800/D35400/white?text=فصل+النخبة+2\\nالصفحة+3",
-        "https://via.placeholder.com/600x800/E67E22/white?text=فصل+النخبة+2\\nالصفحة+4",
-        "https://via.placeholder.com/600x800/F39C12/white?text=فصل+النخبة+2\\nالصفحة+5",
-        "https://via.placeholder.com/600x800/F1C40F/white?text=فصل+النخبة+2\\nالصفحة+6"
+        "https://i.imgur.com/6qN8v3S.png",
+        "https://i.imgur.com/3mP9j2T.png",
+        "https://i.imgur.com/1rL5c8V.png",
+        "https://i.imgur.com/9sK2p4X.png",
+        "https://i.imgur.com/4nR7q8Z.png"
       ]
     }
   },
@@ -64,19 +51,17 @@
     "id": 102, 
     "title": "فصل النخبة - الفصل 3: المواجهة",
     "author": "فريق النخبة",
-    "cover": "https://via.placeholder.com/200x300/8E44AD/white?text=فصل+النخبة+3",
-    "pages": 32,
+    "cover": "https://i.imgur.com/5qM8n9S.png",
+    "pages": 5,
     "rating": 4.9,
     "type": "manga",
     "files": {
       "pages": [
-        "https://via.placeholder.com/600x800/8E44AD/white?text=فصل+النخبة+3\\nالصفحة+1",
-        "https://via.placeholder.com/600x800/9B59B6/white?text=فصل+النخبة+3\\nالصفحة+2",
-        "https://via.placeholder.com/600x800/A569BD/white?text=فصل+النخبة+3\\nالصفحة+3",
-        "https://via.placeholder.com/600x800/BB8FCE/white?text=فصل+النخبة+3\\nالصفحة+4",
-        "https://via.placeholder.com/600x800/D2B4DE/white?text=فصل+النخبة+3\\nالصفحة+5",
-        "https://via.placeholder.com/600x800/E8DAEF/white?text=فصل+النخبة+3\\nالصفحة+6",
-        "https://via.placeholder.com/600x800/F4ECF7/white?text=فصل+النخبة+3\\nالصفحة+7"
+        "https://i.imgur.com/7rN2p4V.png",
+        "https://i.imgur.com/8sK3q5X.png",
+        "https://i.imgur.com/9tL4r6Y.png",
+        "https://i.imgur.com/1vM5s7Z.png",
+        "https://i.imgur.com/2wN6t8A.png"
       ]
     }
   }
