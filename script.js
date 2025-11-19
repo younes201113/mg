@@ -267,5 +267,163 @@ function updateAccountUI(){
 /* ----- utilities ----- */
 function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
 
+/* ----- manga functions ----- */
+function showManga() {
+  const manga = state.books.filter(book => book.type === 'manga');
+  hideAllViews();
+  document.getElementById('homeView').classList.remove('hidden');
+  renderGrid(manga);
+}
+
+function showBooks() {
+  const books = state.books.filter(book => book.type === 'book');
+  hideAllViews();
+  document.getElementById('homeView').classList.remove('hidden');
+  renderGrid(books);
+}
+
+// تعديل دالة openBook لدعم المانغا
+const originalOpenBook = openBook;
+openBook = function(id) {
+  const book = state.books.find(b => b.id === id);
+  if (!book) {
+    alert('لم يتم العثور على المحتوى');
+    return;
+  }
+  
+  if (book.type === 'manga') {
+    openMangaReader(book);
+  } else {
+    originalOpenBook(id);
+  }
+}
+
+// قارئ المانغا
+function openMangaReader(manga) {
+  const pages = manga.files?.pages || [];
+  if (pages.length === 0) {
+    alert('لا توجد صفحات متاحة لهذه المانغا');
+    return;
+  }
+  
+  const windowFeatures = 'width=900,height=700,scrollbars=yes,resizable=yes';
+  const mangaWindow = window.open('', '_blank', windowFeatures);
+  
+  mangaWindow.document.write(`
+    <!DOCTYPE html>
+    <html dir="rtl" lang="ar">
+    <head>
+      <meta charset="UTF-8">
+      <title>${manga.title} - قارئ المانغا</title>
+      <style>
+        body { 
+          margin: 0; 
+          padding: 20px; 
+          background: #1a1a1a; 
+          color: white; 
+          text-align: center; 
+          font-family: Arial, sans-serif;
+        }
+        .manga-container {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+        .manga-page { 
+          max-width: 100%; 
+          height: auto; 
+          margin: 10px 0;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .controls { 
+          margin: 20px 0; 
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 15px;
+        }
+        .nav-btn { 
+          padding: 10px 20px; 
+          background: #007bff; 
+          color: white; 
+          border: none; 
+          border-radius: 5px; 
+          cursor: pointer;
+          font-size: 14px;
+        }
+        .nav-btn:disabled {
+          background: #6c757d;
+          cursor: not-allowed;
+        }
+        .page-info { 
+          font-size: 16px; 
+          font-weight: bold; 
+          padding: 0 15px;
+        }
+        .manga-title {
+          margin-bottom: 20px;
+          color: #fff;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="manga-container">
+        <h2 class="manga-title">${manga.title}</h2>
+        <div class="controls">
+          <button class="nav-btn" onclick="prevPage()" id="prevBtn">السابق</button>
+          <span class="page-info" id="pageInfo">الصفحة 1</span>
+          <button class="nav-btn" onclick="nextPage()" id="nextBtn">التالي</button>
+        </div>
+        <img id="mangaImage" class="manga-page" src="${pages[0]}" alt="صفحة المانغا">
+        <div class="controls">
+          <button class="nav-btn" onclick="prevPage()">السابق</button>
+          <span class="page-info" id="pageInfoBottom">الصفحة 1</span>
+          <button class="nav-btn" onclick="nextPage()">التالي</button>
+        </div>
+      </div>
+      <script>
+        let currentPage = 1;
+        const pages = ${JSON.stringify(pages)};
+        const totalPages = pages.length;
+        
+        function updatePage() {
+          document.getElementById('mangaImage').src = pages[currentPage - 1];
+          document.getElementById('pageInfo').textContent = 'الصفحة ' + currentPage + ' من ' + totalPages;
+          document.getElementById('pageInfoBottom').textContent = 'الصفحة ' + currentPage + ' من ' + totalPages;
+          
+          document.getElementById('prevBtn').disabled = currentPage === 1;
+          document.getElementById('nextBtn').disabled = currentPage === totalPages;
+        }
+        
+        function nextPage() {
+          if (currentPage < totalPages) {
+            currentPage++;
+            updatePage();
+          }
+        }
+        
+        function prevPage() {
+          if (currentPage > 1) {
+            currentPage--;
+            updatePage();
+          }
+        }
+        
+        // التحكم بالسهمين
+        document.addEventListener('keydown', function(event) {
+          if (event.key === 'ArrowRight') {
+            prevPage();
+          } else if (event.key === 'ArrowLeft') {
+            nextPage();
+          }
+        });
+        
+        updatePage();
+      </script>
+    </body>
+    </html>
+  `);
+}
+
 /* ----- start ----- */
 init();
