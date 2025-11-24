@@ -205,3 +205,44 @@ main{
 .back-home-btn.show {
   display: block; /* يظهر فقط مع كلاس show */
 }
+
+/* نظام فصول المانغا */
+.manga-chapters {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.chapters-list {
+    margin-top: 20px;
+}
+
+.chapter-item {
+    margin-bottom: 10px;
+}
+
+.chapter-btn {
+    width: 100%;
+    background: var(--card);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: right;
+}
+
+.chapter-btn:hover {
+    background: var(--accent);
+    transform: translateX(-5px);
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--panel);
+    border-radius: 10px;
+}
