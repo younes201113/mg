@@ -12,14 +12,16 @@
     }
   },
   {
-    "id": 100,
-    "title": "2 فصل النخبة السنة ",
-    "author": "فريق النخبة",
-    "cover": "https://tse1.mm.bing.net/th/id/OIP.z6ssYVkKGXCtwaZRBRHbRAAAAA?rs=1&pid=ImgDetMain&o=7&rm=3",
-    "pages": 5,
-    "rating": 4.7,
-    "type": "manga",
-    "files": {
+  "id": 101,
+  "title": "مانغا فصل النخبة",
+  "author": "Shunsaku Tomose", 
+  "type": "manga",
+  "cover": "رابط_صورة_الغلاف",
+  "rating": 4.5,
+  "chapters": [
+    {
+      "number": 1,
+      "title": "بداية الرحلة",
       "pages": [
         "https://s5solo.lekmanga.net/manga/arb15/data/manga_634c2c53c099f/4b718a3e733ff6c0ed186db95e1af16d/02.jpg",
         "https://s5solo.lekmanga.net/manga/arb15/data/manga_634c2c53c099f/4b718a3e733ff6c0ed186db95e1af16d/03.jpg", 
@@ -68,7 +70,8 @@
         "https://s5solo.lekmanga.net/manga/arb15/data/manga_634c2c53c099f/4b718a3e733ff6c0ed186db95e1af16d/45.jpg"
       ]
     }
-  },
+  ]
+}
   {
     "id": 60,
     "title": "أرض زيكولا",
