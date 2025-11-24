@@ -311,32 +311,27 @@ openBook = function(id) {
 
 // واجهة تفاصيل المانغا (نفس واجهة الكتب)
 function openMangaDetail(manga) {
-  hideAllViews();
-  const view = document.getElementById('bookView');
-  view.classList.remove('hidden');
-    showBackButton(); // <-- أضف هنا
-  const fav = isFavorite(manga.id);
-  const userRate = getUserRating(manga.id) || manga.rating || 0;
-  
-  view.innerHTML = `
-    <div class="book-view">
-      <img class="cover" src="${manga.cover}" alt="${escapeHtml(manga.title)}" />
-      <h1>${escapeHtml(manga.title)}</h1>
-      <p class="muted">المؤلف: ${escapeHtml(manga.author)} — الصفحات: ${manga.pages || '—'}</p>
-      <p>التقييم العام: ⭐ ${manga.rating || 0} — تقييمك: <strong id="myRate">${userRate}</strong></p>
-      <div class="controls">
-        <button class="btn" onclick="toggleFavorite(${manga.id})">${fav ? '💖 إزالة من المفضلة' : '🤍 إضافة للمفضلة'}</button>
-        <button class="btn alt" onclick="promptRate(${manga.id})">⭐ قيم</button>
-        <button class="btn alt" onclick="readManga(${manga.id})">📖 قراءة</button>
-      </div>
-      <section class="comments" id="commentsArea">
-        <h3>التعليقات</h3>
-        <div id="commentsList"></div>
-        <div id="commentForm"></div>
-      </section>
-    </div>
-  `;
-  renderComments(manga.id);
+    hideAllViews();
+    const view = document.getElementById('bookView');
+    view.classList.remove('hidden');
+    showBackButton();
+    
+    const fav = isFavorite(manga.id);
+    const userRate = getUserRating(manga.id) || manga.rating || 0;
+    
+    view.innerHTML = `
+        <div class="book-view">
+            <img class="cover" src="${manga.cover}" alt="${escapeHtml(manga.title)}" />
+            <h1>${escapeHtml(manga.title)}</h1>
+            <p class="muted">المؤلف: ${escapeHtml(manga.author)}</p>
+            <p>التقييم العام: ⭐ ${manga.rating || 0} — تقييمك: <strong id="myRate">${userRate}</strong></p>
+            <div class="controls">
+                <button class="btn" onclick="toggleFavorite(${manga.id})">${fav ? '💖 إزالة من المفضلة' : '🤍 إضافة للمفضلة'}</button>
+                <button class="btn alt" onclick="promptRate(${manga.id})">⭐ قيم</button>
+                <button class="btn alt" onclick="showMangaChapters(${JSON.stringify(manga).replace(/"/g, '&quot;')})">📖 قراءة الفصول</button>
+            </div>
+        </div>
+    `;
 }
 
 // دالة قراءة المانغا (تفتح في نفس الصفحة)
