@@ -160,26 +160,6 @@ main{
   text-align: center;
 }
 
-.reader-header {
-  background: #2d2d2d;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.reader-header .back-btn {
-  background: #6c757d;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 .manga-pages-container {
   margin-top: 80px; /* علشان ما يختفي تحت الهيدر */
@@ -190,4 +170,28 @@ main{
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+/* زر الرجوع الموحد - ضعه في نهاية الـ CSS */
+.back-home-btn {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3);
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.back-home-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(123, 44, 191, 0.4);
 }
