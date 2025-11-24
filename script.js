@@ -58,6 +58,7 @@ function goHome(){
   hideAllViews();
   document.getElementById('homeView').classList.remove('hidden');
   renderGrid(state.books);
+  hideBackButton(); // <-- أضف هنا
 }
 
 function hideAllViews(){
@@ -94,6 +95,7 @@ function openBook(id){
   hideAllViews();
   const view = document.getElementById('bookView');
   view.classList.remove('hidden');
+    showBackButton(); // <-- أضف هنا
   // build detail
   const fav = isFavorite(id);
   const userRate = getUserRating(id) || book.rating || 0;
@@ -144,6 +146,7 @@ function isFavorite(id){
 function showFavorites(){
   hideAllViews();
   document.getElementById('favView').classList.remove('hidden');
+    hideBackButton(); // <-- أضف هنا
   const favGrid = document.getElementById('favGrid');
   if(!currentUser || !state.users[currentUser] || state.users[currentUser].favorites.length===0){
     favGrid.innerHTML = '<p class="muted">لم تضف كتبًا للمفضلة بعد.</p>';
@@ -244,7 +247,7 @@ async function doSearch(){
 
 /* ----- login (simple username prompt) ----- */
 function doLogin(){
-  const name = prompt('اكتب اسمك (يوزر الديسكورد) للتسجيل / الدخول:');
+  const name = prompt('اكتب اسمك لتسجيل الدخول:');
   if(!name) return;
   currentUser = name.trim();
   if(!state.users[currentUser]) state.users[currentUser] = { favorites: [], ratings: {} };
@@ -254,7 +257,13 @@ function doLogin(){
 }
 
 /* ----- account view ----- */
-function showAccount(){ hideAllViews(); document.getElementById('accountView').classList.remove('hidden'); document.getElementById('accountName').innerText = currentUser || 'غير مسجل'; }
+function showAccount(){ 
+  hideAllViews();
+  document.getElementById('accountView').classList.remove('hidden');
+  hideBackButton();
+  document.getElementById('accountName').innerText = currentUser || 'غير مسجل';
+  }
+
 function updateAccountUI(){
   if(currentUser){
     document.getElementById('loginBtn').innerText = currentUser + ' ✓';
@@ -273,6 +282,7 @@ function showManga() {
   hideAllViews();
   document.getElementById('homeView').classList.remove('hidden');
   renderGrid(manga);
+    hideBackButton(); // <-- أضف هنا
 }
 
 function showBooks() {
@@ -280,6 +290,7 @@ function showBooks() {
   hideAllViews();
   document.getElementById('homeView').classList.remove('hidden');
   renderGrid(books);
+    hideBackButton(); // <-- أضف هنا
 }
 
 // تعديل دالة openBook لدعم المانغا
@@ -303,7 +314,7 @@ function openMangaDetail(manga) {
   hideAllViews();
   const view = document.getElementById('bookView');
   view.classList.remove('hidden');
-  
+    showBackButton(); // <-- أضف هنا
   const fav = isFavorite(manga.id);
   const userRate = getUserRating(manga.id) || manga.rating || 0;
   
@@ -334,6 +345,7 @@ function readManga(id) {
   if (!manga) return;
   
   hideAllViews();
+    showBackButton(); // <-- أضف هنا
   const mangaView = document.createElement('div');
   mangaView.className = 'view';
   mangaView.id = 'mangaReaderView';
