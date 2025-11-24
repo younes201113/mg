@@ -323,15 +323,21 @@ function openMangaDetail(manga) {
         <div class="book-view">
             <img class="cover" src="${manga.cover}" alt="${escapeHtml(manga.title)}" />
             <h1>${escapeHtml(manga.title)}</h1>
-            <p class="muted">المؤلف: ${escapeHtml(manga.author)}</p>
+            <p class="muted">المؤلف: ${escapeHtml(manga.author)} — الفصول: ${manga.chapters ? manga.chapters.length : 0}</p>
             <p>التقييم العام: ⭐ ${manga.rating || 0} — تقييمك: <strong id="myRate">${userRate}</strong></p>
             <div class="controls">
                 <button class="btn" onclick="toggleFavorite(${manga.id})">${fav ? '💖 إزالة من المفضلة' : '🤍 إضافة للمفضلة'}</button>
                 <button class="btn alt" onclick="promptRate(${manga.id})">⭐ قيم</button>
-                <button class="btn alt" onclick="showMangaChapters(${JSON.stringify(manga).replace(/"/g, '&quot;')})">📖 قراءة الفصول</button>
+                <button class="btn alt" onclick="showMangaChapters(${manga.id})">📖 قراءة الفصول</button>
             </div>
+            <section class="comments" id="commentsArea">
+                <h3>التعليقات</h3>
+                <div id="commentsList"></div>
+                <div id="commentForm"></div>
+            </section>
         </div>
     `;
+    renderComments(manga.id);
 }
 
 // دالة قراءة المانغا (تفتح في نفس الصفحة)
