@@ -362,3 +362,51 @@ function readManga(id) {
 
 /* ----- start ----- */
 init();
+
+// ==========================================
+// زر الرجوع الذكي - ضعه في نهاية script.js
+// ==========================================
+
+const backButton = document.getElementById('backHomeBtn');
+
+// إذا الزر ما موجود، أنشئه ديناميكيًا
+if (!backButton) {
+    const backBtn = document.createElement('button');
+    backBtn.id = 'backHomeBtn';
+    backBtn.className = 'back-home-btn';
+    backBtn.innerHTML = '← الرجوع';
+    backBtn.onclick = goBack;
+    document.body.appendChild(backBtn);
+}
+
+function toggleBackButton(show) {
+    const btn = document.getElementById('backHomeBtn');
+    if (btn) {
+        if (show) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    }
+}
+
+function hideBackButton() {
+    toggleBackButton(false);
+}
+
+function showBackButton() {
+    toggleBackButton(true);
+}
+
+function goBack() {
+    window.history.back();
+}
+
+// إخفاء الزر افتراضيًا عند التحميل
+document.addEventListener('DOMContentLoaded', function() {
+    hideBackButton();
+});
+
+// استدعاء الدوال في أماكنها المناسبة في الكود الحالي:
+// عندما تفتح كتاب أو مانغا: showBackButton()
+// عندما ترجع للرئيسية: hideBackButton()
