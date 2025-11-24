@@ -422,3 +422,65 @@ document.addEventListener('DOMContentLoaded', function() {
 // استدعاء الدوال في أماكنها المناسبة في الكود الحالي:
 // عندما تفتح كتاب أو مانغا: showBackButton()
 // عندما ترجع للرئيسية: hideBackButton()
+
+// ===== نظام عرض فصول المانغا =====
+function showMangaChapters(book) {
+    hideAllViews();
+    const view = document.createElement('div');
+    view.className = 'view';
+    view.id = 'mangaChaptersView';
+    
+    let chaptersHTML = '';
+    book.chapters.forEach(ch => {
+        chaptersHTML += `
+            <div class="chapter-item">
+                <button class="chapter-btn" onclick="openChapter(${book.id}, ${ch.number})">
+                    الفصل ${ch.number} - ${ch.title}
+                </button>
+            </div>
+        `;
+    });
+    
+    view.innerHTML = `
+        <div class="manga-chapters">
+            <h1>${book.title}</h1>
+            <p class="muted">اختر الفصل للقراءة</p>
+            <div class="chapters-list">
+                ${chaptersHTML}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('content').appendChild(view);
+    showBackButton();
+}
+
+function openChapter(bookId, chapterNumber) {
+    const book = state.books.find(b => b.id === bookId);
+    const chapter = book.chapters.find(c => c.number === chapterNumber);
+    
+    hideAllViews();
+    const view = document.createElement('div');
+    view.className = 'view';
+    view.id = 'mangaChapterView';
+    
+    let pagesHTML = '';
+    chapter.pages.forEach((page, index) => {
+        pagesHTML += `<img src="${page}" class="manga-page" alt="صفحة ${index + 1}">`;
+    });
+    
+    view.innerHTML = `
+        <div class="manga-reader">
+            <div class="chapter-header">
+                <h2>${book.title} - الفصل ${chapter.number}</h2>
+                <p class="muted">${chapter.title}</p>
+            </div>
+            <div class="manga-pages-container">
+                ${pagesHTML}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('content').appendChild(view);
+    showBackButton();
+}
