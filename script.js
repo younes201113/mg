@@ -372,6 +372,31 @@ function readManga(id) {
   
   document.getElementById('content').appendChild(mangaView);
 }
+function showMangaChapters(bookId) {
+    const book = state.books.find(b => b.id === bookId);
+    
+    if (!book || !book.chapters) {
+        alert('البيانات غير متوفرة - Book: ' + !!book + ', Chapters: ' + !!book?.chapters);
+        return;
+    }
+    
+    hideAllViews();
+    const view = document.createElement('div');
+    view.className = 'view';
+    view.innerHTML = `
+        <h1>${book.title}</h1>
+        <p>عدد الفصول: ${book.chapters.length}</p>
+        ${book.chapters.map(ch => `
+            <button onclick="openChapter(${book.id}, ${ch.number})" 
+                    style="display:block; width:100%; padding:10px; margin:5px;">
+                الفصل ${ch.number} - ${ch.title}
+            </button>
+        `).join('')}
+    `;
+    
+    document.getElementById('content').appendChild(view);
+    showBackButton();
+}
 
 /* ----- start ----- */
 init();
