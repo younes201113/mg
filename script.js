@@ -383,16 +383,37 @@ function showMangaChapters(bookId) {
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
+    view.id = 'mangaChaptersView';
+    
+    let chaptersHTML = '';
+    book.chapters.forEach(ch => {
+        chaptersHTML += `
+            <div class="chapter-item">
+                <button class="chapter-btn" data-book-id="${book.id}" data-chapter="${ch.number}">
+                    الفصل ${ch.number} - ${ch.title}
+                </button>
+            </div>
+        `;
+    });
+    
     view.innerHTML = `
-        <h1>${book.title}</h1>
-        <p>عدد الفصول: ${book.chapters.length}</p>
-        ${book.chapters.map(ch => `
-            <button onclick="openChapter(${book.id}, ${ch.number})" 
-                    style="display:block; width:100%; padding:10px; margin:5px;">
-                الفصل ${ch.number} - ${ch.title}
-            </button>
-        `).join('')}
+        <div class="manga-chapters">
+            <h1>${book.title}</h1>
+            <p class="muted">عدد الفصول: ${book.chapters.length}</p>
+            <div class="chapters-list">
+                ${chaptersHTML}
+            </div>
+        </div>
     `;
+    
+    // أضف event listeners للزراير
+    view.querySelectorAll('.chapter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const bookId = this.getAttribute('data-book-id');
+            const chapterNum = this.getAttribute('data-chapter');
+            openChapter(parseInt(bookId), parseInt(chapterNum));
+        });
+    });
     
     document.getElementById('content').appendChild(view);
     showBackButton();
@@ -435,8 +456,7 @@ function openChapter(bookId, chapterNumber) {
             <div class="chapter-header">
                 <h2>${book.title} - الفصل ${chapter.number}</h2>
                 <p class="muted">${chapter.title}</p>
-                <button class="btn" onclick="showMangaChapters(${book.id})" 
-                        style="margin: 10px; padding: 10px 20px;">
+                <button class="back-to-chapters-btn btn">
                     ← العودة للفصول
                 </button>
             </div>
@@ -446,10 +466,14 @@ function openChapter(bookId, chapterNumber) {
         </div>
     `;
     
+    // أضف event listener للزر الجديد
+    view.querySelector('.back-to-chapters-btn').addEventListener('click', function() {
+        showMangaChapters(bookId);
+    });
+    
     document.getElementById('content').appendChild(view);
     showBackButton();
 }
-
 /* ----- start ----- */
 init();
 
