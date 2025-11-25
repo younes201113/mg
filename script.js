@@ -450,7 +450,27 @@ document.addEventListener('DOMContentLoaded', function() {
 // عندما ترجع للرئيسية: hideBackButton()
 
 // ===== نظام عرض فصول المانغا =====
-function showMangaChapters(book) {
+function showMangaChapters(bookId) {
+    console.log('🔍 جاري فتح فصول الكتاب رقم:', bookId);
+    
+    // البحث عن الكتاب
+    const book = state.books.find(b => b.id == bookId);
+    
+    if (!book) {
+        alert('❌ الكتاب غير موجود');
+        return;
+    }
+    
+    // تحقق من وجود الفصول
+    if (!book.chapters || !Array.isArray(book.chapters)) {
+        alert('❌ لا توجد فصول متاحة');
+        return;
+    }
+    
+    console.log('✅ وجدنا الكتاب:', book.title);
+    console.log('📖 عدد الفصول:', book.chapters.length);
+    
+    // إنشاء واجهة الفصول
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
