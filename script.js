@@ -397,6 +397,58 @@ function showMangaChapters(bookId) {
     document.getElementById('content').appendChild(view);
     showBackButton();
 }
+function openChapter(bookId, chapterNumber) {
+    console.log('🔍 فتح الفصل:', bookId, chapterNumber);
+    
+    const book = state.books.find(b => b.id == bookId);
+    if (!book) {
+        alert('الكتاب غير موجود');
+        return;
+    }
+    
+    const chapter = book.chapters.find(c => c.number == chapterNumber);
+    if (!chapter) {
+        alert('الفصل غير موجود');
+        return;
+    }
+    
+    console.log('📖 الفصل:', chapter);
+    
+    hideAllViews();
+    const view = document.createElement('div');
+    view.className = 'view';
+    view.id = 'mangaChapterView';
+    
+    let pagesHTML = '';
+    chapter.pages.forEach((page, index) => {
+        pagesHTML += `
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="${page}" class="manga-page" alt="صفحة ${index + 1}" 
+                     style="max-width: 100%; height: auto; border-radius: 10px;">
+                <p class="muted">صفحة ${index + 1}</p>
+            </div>
+        `;
+    });
+    
+    view.innerHTML = `
+        <div class="manga-reader">
+            <div class="chapter-header">
+                <h2>${book.title} - الفصل ${chapter.number}</h2>
+                <p class="muted">${chapter.title}</p>
+                <button class="btn" onclick="showMangaChapters(${book.id})" 
+                        style="margin: 10px; padding: 10px 20px;">
+                    ← العودة للفصول
+                </button>
+            </div>
+            <div class="manga-pages-container">
+                ${pagesHTML}
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('content').appendChild(view);
+    showBackButton();
+}
 
 /* ----- start ----- */
 init();
