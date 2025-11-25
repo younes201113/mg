@@ -450,14 +450,41 @@ document.addEventListener('DOMContentLoaded', function() {
 // عندما ترجع للرئيسية: hideBackButton()
 
 // ===== نظام عرض فصول المانغا =====
-function showMangaChapters(book) {
-    hideAllViews();
-    const view = document.createElement('div');
-    view.className = 'view';
-    view.id = 'mangaChaptersView';
+function showMangaChapters(bookId) {
+    console.log('🔍 البحث عن كتاب رقم:', bookId);
     
+    // تحقق من البيانات الأساسية
+    if (!state.books || state.books.length === 0) {
+        alert('❌ البيانات لم تحمل بعد');
+        console.log('state.books:', state.books);
+        return;
+    }
+    
+    const book = state.books.find(b => b.id == bookId);
+    console.log('📖 الكتاب:', book);
+    
+    if (!book) {
+        alert('❌ الكتاب غير موجود - ID: ' + bookId);
+        return;
+    }
+    
+    // تحقق من chapters قبل forEach - هذا هو السطر 460!
+    if (!book.chapters || !Array.isArray(book.chapters)) {
+        alert('❌ لا توجد فصول - chapters: ' + book.chapters);
+        console.log('book.chapters:', book.chapters);
+        return;
+    }
+    
+    if (book.chapters.length === 0) {
+        alert('📭 عدد الفصول: 0');
+        return;
+    }
+    
+    console.log('✅ الفصول:', book.chapters);
+    
+    // الآن اشتغل forEach
     let chaptersHTML = '';
-    book.chapters.forEach(ch => {
+    book.chapters.forEach(ch => {  // هذا هو السطر 460!
         chaptersHTML += `
             <div class="chapter-item">
                 <button class="chapter-btn" onclick="openChapter(${book.id}, ${ch.number})">
@@ -467,20 +494,8 @@ function showMangaChapters(book) {
         `;
     });
     
-    view.innerHTML = `
-        <div class="manga-chapters">
-            <h1>${book.title}</h1>
-            <p class="muted">اختر الفصل للقراءة</p>
-            <div class="chapters-list">
-                ${chaptersHTML}
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('content').appendChild(view);
-    showBackButton();
+    // باقي الكود...
 }
-
 function openChapter(bookId, chapterNumber) {
     const book = state.books.find(b => b.id === bookId);
     const chapter = book.chapters.find(c => c.number === chapterNumber);
