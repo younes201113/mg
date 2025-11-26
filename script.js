@@ -474,6 +474,114 @@ function openChapter(bookId, chapterNumber) {
     document.getElementById('content').appendChild(view);
     showBackButton();
 }
+// دالة سحب البيانات من MangaDex
+async function loadMangaFromMangaDex(mangaId) {
+    try {
+        console.log('🔍 جاري تحميل البيانات من MangaDex...');
+        
+        // 1. جلب بيانات المانغا
+        const mangaResponse = await fetch(`https://api.mangadex.org/manga/${mangaId}`);
+        const mangaData = await mangaResponse.json();
+        
+        if (mangaData.result !== "ok") {
+            alert('❌ المانغا غير موجودة في MangaDex');
+            return null;
+        }
+        
+        // 2. جلب الفصول (بالإنجليزية أولاً)
+        const chaptersResponse = await fetch(`https://api.mangadex.org/manga/${mangaId}/feed?order[chapter]=asc&translatedLanguage[]=en`);
+        const chaptersData = await chaptersResponse.json();
+        
+        if (!chaptersData.data || chaptersData.data.length === 0) {
+            alert('❌ لا توجد فصول متاحة');
+            return null;
+        }
+        
+        console.log('📖 عدد الفصول:', chaptersData.data.length);
+        
+        // 3. إرجاع البيانات
+        return {
+            title: mangaData.data.attributes.title.en || "Unknown",
+            author: "Shougo Kinugasa",
+            chapters: chaptersData.data.map((chapter, index) => ({
+                number: index + 1,
+                title: chapter.attributes.title || `الفصل ${index + 1}`,
+                pages: [] // سنملأها لاحقاً
+            }))
+        };
+        
+    } catch (error) {
+        console.error('❌ خطأ في التحميل:', error);
+        alert('❌ فشل تحميل البيانات من MangaDex');
+        return null;
+    }
+}
+
+// دالة فتح المانغا المعدلة
+async function openMangaDetail(manga) {
+    hideAllViews();
+    const view = document.getElementById('bookView');
+    view.classList.remove('hidden');
+    showBackButton();
+    
+    const fav = isFavorite(manga.id);
+    const userRate = getUserRating(manga.id) || manga.rating || 0;
+    
+    // إذا عندنا mangaDexId وعندنا اتصال انترنت
+    if (manga.mangaDexId && navigator.onLine) {
+        view.innerHTML = `
+            <div class="book-view">
+                <img class="cover" src="${manga.cover}" alt="${escapeHtml(manga.title)}" />
+                <h1>${escapeHtml(manga.title)}</h1>
+                <p class="muted">جاري تحميل الفصول من MangaDex...</p>
+                <div class="controls">
+                    <button class="btn" onclick="toggleFavorite(${manga.id})">${fav ? '💖 إزالة من المفضلة' : '🤍 إضافة للمفضلة'}</button>
+                    <button class="btn alt" onclick="loadAndShowChapters(${manga.id})">📖 تحميل الفصول</button>
+                </div>
+            </div>
+        `;
+    } else {
+        // الواجهة العادية
+        view.innerHTML = `
+            <div class="book-view">
+                <img class="cover" src="${manga.cover}" alt="${escapeHtml(manga.title)}" />
+                <h1>${escapeHtml(manga.title)}</h1>
+                <p class="muted">المؤلف: ${escapeHtml(manga.author)}</p>
+                <p>التقييم العام: ⭐ ${manga.rating || 0}</p>
+                <div class="controls">
+                    <button class="btn" onclick="toggleFavorite(${manga.id})">${fav ? '💖 إزالة من المفضلة' : '🤍 إضافة للمفضلة'}</button>
+                    ${manga.mangaDexId ? 
+                        `<button class="btn alt" onclick="loadAndShowChapters(${manga.id})">📖 تحميل الفصول</button>` :
+                        `<button class="btn alt" onclick="alert('لا توجد فصول متاحة')">📖 قراءة الفصول</button>`
+                    }
+                </div>
+            </div>
+        `;
+    }
+    
+    renderComments(manga.id);
+}
+
+// دالة تحميل وعرض الفصول
+async function loadAndShowChapters(bookId) {
+    const book = state.books.find(b => b.id === bookId);
+    
+    if (!book.mangaDexId) {
+        alert('❌ هذه المانغا لا تدعم التحميل التلقائي');
+        return;
+    }
+    
+    const mangaData = await loadMangaFromMangaDex(book.mangaDexId);
+    
+    if (mangaData && mangaData.chapters) {
+        // تحديث البيانات المحلية
+        const index = state.books.findIndex(b => b.id === bookId);
+        state.books[index].chapters = mangaData.chapters;
+        
+        // عرض الفصول
+        showMangaChapters(bookId);
+    }
+}
 /* ----- start ----- */
 init();
 
