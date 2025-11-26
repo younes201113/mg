@@ -120,4 +120,13 @@
       "pdf": "https://drive.google.com/uc?export=download&id=1Wmxr5NYPiSPrXqjrKvPfWG6IgRZ9sW3B"
     }
   }
-]
+  {
+  "id": 201,
+  "title": "Classroom of the Elite",
+  "author": "Shougo Kinugasa",
+  "type": "manga", 
+  "cover": "https://uploads.mangadex.org/covers/bc5f9952-4bb0-4f60-a1ff-b3b2186b560f/31c6958c-fd14-4fee-b3a1-dca841fd0a94.jpg",
+  "rating": 4.5,
+  "mangaDexId": "bc5f9952-4bb0-4f60-a1ff-b3b2186b560f"
+},
+ ]
