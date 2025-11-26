@@ -562,21 +562,26 @@ async function openMangaDetail(manga) {
     renderComments(manga.id);
 }
 
-// دالة تحميل وعرض الفصول
 async function loadAndShowChapters(bookId) {
-    const book = state.books.find(b => b.id === bookId);
-    
-    if (!book.mangaDexId) {
-        alert('❌ هذه المانغا لا تدعم التحميل التلقائي');
-        return;
+    try {
+        const book = books.find(b => b.id === bookId);
+        
+        if (!book) {
+            throw new Error('الكتاب غير موجود');
+        }
+
+        // استخدم البيانات المحلية مباشرة
+        if (book.chapters && book.chapters.length > 0) {
+            showMangaReader(book);
+        } else {
+            // إذا ما عندش فصول، اعرض رسالة
+            alert('لا توجد فصول متاحة حالياً');
+        }
+    } catch (error) {
+        console.error('❌ خطأ:', error);
+        alert('حدث خطأ في التحميل');
     }
-    
-    const mangaData = await loadMangaFromMangaDex(book.mangaDexId);
-    
-    if (mangaData && mangaData.chapters) {
-        // تحديث البيانات المحلية
-        const index = state.books.findIndex(b => b.id === bookId);
-        state.books[index].chapters = mangaData.chapters;
+}
         
         // عرض الفصول
         showMangaChapters(bookId);
