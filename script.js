@@ -215,23 +215,30 @@ function postComment(bookId){
 }
 
 /* ----- read / download (opens pdf link if available) ----- */
-function readBook(id){
-  const book = state.books.find(b=>b.id===id);
-  if(!book) return;
-  if(book.files && book.files.pdf){
+function readBook(bookId) {
+  const book = state.books.find(b => b.id === bookId);
+  if (!book || book.type !== 'book') return;
+  
+  // افتح الPDF في صفحة جديدة للقراءة
+  if (book.files && book.files.pdf) {
     window.open(book.files.pdf, '_blank');
   } else {
-    alert('لا يوجد ملف قراءة متاح لهذا الكتاب.');
+    alert('الكتاب غير متاح للقراءة');
   }
 }
-function downloadBook(id){
-  const book = state.books.find(b=>b.id===id);
-  if(!book) return;
-  if(book.files && book.files.pdf){
-    const a = document.createElement('a'); a.href = book.files.pdf; a.download = '';
-    document.body.appendChild(a); a.click(); a.remove();
+
+function downloadBook(bookId) {
+  const book = state.books.find(b => b.id === bookId);
+  if (!book || book.type !== 'book') return;
+  
+  // نزل الPDF
+  if (book.files && book.files.pdf) {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = book.files.pdf;
+    downloadLink.download = `${book.title}.pdf`;
+    downloadLink.click();
   } else {
-    alert('لا يوجد ملف تحميل متاح لهذا الكتاب.');
+    alert('الكتاب غير متاح للتحميل');
   }
 }
 
