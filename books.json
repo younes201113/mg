@@ -82,7 +82,8 @@
     "rating": 4.5,
     "type": "book",
     "files": {
-      "pdf": "https://drive.google.com/uc?export=download&id=11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl"
+      "read": "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/view",
+    "download": "https://drive.google.com/uc?export=download&id=11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl"
     }
   },
   {
@@ -94,7 +95,8 @@
     "rating": 4.4,
     "type": "book",
     "files": {
-      "pdf": "https://drive.google.com/uc?export=download&id=1j7kWkmLnZbpppTwwaknFDxQ5f6PS-i0o"
+      "read": "https://drive.google.com/file/d/1j7kWkmLnZbpppTwwaknFDxQ5f6PS-i0o/view"
+      "download": "https://drive.google.com/uc?export=download&id=1j7kWkmLnZbpppTwwaknFDxQ5f6PS-i0o"
     }
   },
   {
@@ -106,7 +108,8 @@
     "rating": 4.8,
     "type": "book",
     "files": {
-      "pdf": "https://drive.google.com/uc?export=download&id=1sUSiWDZHxLBT3irIt0mZx1BBYJ-nrc-1"
+      "read": "https://drive.google.com/file/d/1sUSiWDZHxLBT3irIt0mZx1BBYJ-nrc-1/view"
+      "download": "https://drive.google.com/uc?export=download&id=1sUSiWDZHxLBT3irIt0mZx1BBYJ-nrc-1"
     }
   },
   {
@@ -118,7 +121,8 @@
     "rating": 4.7, 
     "type": "book",
     "files": {
-      "pdf": "https://drive.google.com/uc?export=download&id=1Wmxr5NYPiSPrXqjrKvPfWG6IgRZ9sW3B"
+      "read": "https://drive.google.com/file/d/1Wmxr5NYPiSPrXqjrKvPfWG6IgRZ9sW3B/view"
+      "download": "https://drive.google.com/uc?export=download&id=1Wmxr5NYPiSPrXqjrKvPfWG6IgRZ9sW3B"
     }
   }
 ]
