@@ -219,13 +219,9 @@ function readBook(bookId) {
   const book = state.books.find(b => b.id === bookId);
   if (!book || book.type !== 'book') return;
   
-  if (book.files && book.files.pdf) {
-    // غير الرابط عشان يفتح للمشاهدة بدل التحميل
-    const readUrl = book.files.pdf
-      .replace('export=download', 'preview')
-      .replace('uc?', 'file/d/') + '/preview';
-    
-    window.open(readUrl, '_blank');
+  // افتح رابط القراءة
+  if (book.files && book.files.read) {
+    window.open(book.files.read, '_blank');
   } else {
     alert('الكتاب غير متاح للقراءة');
   }
@@ -235,12 +231,9 @@ function downloadBook(bookId) {
   const book = state.books.find(b => b.id === bookId);
   if (!book || book.type !== 'book') return;
   
-  // التحميل يفضل زي ما هو
-  if (book.files && book.files.pdf) {
-    const downloadLink = document.createElement('a');
-    downloadLink.href = book.files.pdf;
-    downloadLink.download = `${book.title}.pdf`;
-    downloadLink.click();
+  // افتح رابط التحميل
+  if (book.files && book.files.download) {
+    window.open(book.files.download, '_blank');
   } else {
     alert('الكتاب غير متاح للتحميل');
   }
