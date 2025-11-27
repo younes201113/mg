@@ -1,16 +1,17 @@
 [
   {
-    "id": 1,
-    "title": "كفاحي",
-    "author": "هتلر",
-    "cover": "https://tse3.mm.bing.net/th/id/OIP.OVHT5MUJYGM8FXCxnSWujwHaKZ?rs=1&pid=ImgDetMain&o=7&rm=3",
-    "pages": 287,
-    "rating": 4.1,
-    "type": "book",
-    "files": {
-      "pdf": "https://drive.google.com/uc?export=download&id=1u3QqdqGzV7z3yZvP3sSxvNizZb7sQD54"
-    }
-  },
+  "id": 1,
+  "title": "كفاحي", 
+  "author": "هتلر",
+  "cover": "https://tse3.mm.bing.net/th/id/OIP.OVHT5MUJYGM8FXCxnSWujwHaKZ?rs=1&pid=ImgDetMain&o=7&rm=3",
+  "pages": 287,
+  "rating": 4.1,
+  "type": "book",
+  "files": {
+    "read": "https://drive.google.com/file/d/1u3QqdqGzV7z3yZvP3sSxvNizZb7sQD54/view",
+    "download": "https://drive.google.com/uc?export=download&id=1u3QqdqGzV7z3yZvP3sSxvNizZb7sQD54"
+  }
+},
   {
   "id": 101,
   "title": "مانغا فصل النخبة",
