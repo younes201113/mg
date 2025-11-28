@@ -376,14 +376,68 @@ function readManga(id) {
   
   document.getElementById('content').appendChild(mangaView);
 }
-function showMangaChapters(bookId) {
-    const book = state.books.find(b => b.id === bookId);
+async function showMangaChapters(bookId) {
+    console.log('🔍 جاري فتح فصول الكتاب رقم:', bookId);
     
-    if (!book || !book.chapters) {
-        alert('البيانات غير متوفرة - Book: ' + !!book + ', Chapters: ' + !!book?.chapters);
+    const book = state.books.find(b => b.id == bookId);
+    if (!book) {
+        alert('❌ الكتاب غير موجود');
         return;
     }
+
+    // إذا عندك mangaDexId، حمّل الفصول من API
+    if (book.mangaDexId && (!book.chapters || book.chapters.length === 0)) {
+        try {
+            console.log('🚀 جاري تحميل الفصول من MangaDex...');
+            
+            // عرض تحميل
+            const loadingMsg = document.createElement('div');
+            loadingMsg.innerHTML = '📖 جاري تحميل الفصول...';
+            loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
+            document.body.appendChild(loadingMsg);
+
+            // جلب الفصول من API
+            const chaptersResponse = await fetch(
+                `https://api.mangadex.org/manga/${book.mangaDexId}/feed?` +
+                `order[chapter]=asc&` +
+                `translatedLanguage[]=ar&` +
+                `limit=20`
+            );
+            
+            const chaptersData = await chaptersResponse.json();
+            document.body.removeChild(loadingMsg);
+
+            if (!chaptersData.data || chaptersData.data.length === 0) {
+                throw new Error('لا توجد فصول مترجمة للعربية');
+            }
+
+            // حفظ الفصول في state مؤقتاً
+            book.chapters = chaptersData.data.map((chapter, index) => ({
+                number: index + 1,
+                title: chapter.attributes.title || `الفصل ${index + 1}`,
+                chapterId: chapter.id, // حفظ الـ ID لتحميل الصور لاحقاً
+                pages: [] // بتكون فارغة لحد ما يفتح الفصل
+            }));
+
+            console.log('✅ تم تحميل', book.chapters.length, 'فصل');
+            
+        } catch (error) {
+            console.error('❌ خطأ في تحميل الفصول:', error);
+            alert('حدث خطأ في تحميل الفصول');
+            return;
+        }
+    }
+
+    // إذا ما زاد ما في فصول
+    if (!book.chapters || book.chapters.length === 0) {
+        alert('❌ لا توجد فصول متاحة');
+        return;
+    }
+
+    console.log('✅ وجدنا الكتاب:', book.title);
+    console.log('📖 عدد الفصول:', book.chapters.length);
     
+    // إنشاء واجهة الفصول
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
@@ -393,7 +447,7 @@ function showMangaChapters(bookId) {
     book.chapters.forEach(ch => {
         chaptersHTML += `
             <div class="chapter-item">
-                <button class="chapter-btn" data-book-id="${book.id}" data-chapter="${ch.number}">
+                <button class="chapter-btn" onclick="openChapter(${book.id}, ${ch.number})">
                     الفصل ${ch.number} - ${ch.title}
                 </button>
             </div>
@@ -403,26 +457,17 @@ function showMangaChapters(bookId) {
     view.innerHTML = `
         <div class="manga-chapters">
             <h1>${book.title}</h1>
-            <p class="muted">عدد الفصول: ${book.chapters.length}</p>
+            <p class="muted">اختر الفصل للقراءة</p>
             <div class="chapters-list">
                 ${chaptersHTML}
             </div>
         </div>
     `;
     
-    // أضف event listeners للزراير
-    view.querySelectorAll('.chapter-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const bookId = this.getAttribute('data-book-id');
-            const chapterNum = this.getAttribute('data-chapter');
-            openChapter(parseInt(bookId), parseInt(chapterNum));
-        });
-    });
-    
     document.getElementById('content').appendChild(view);
     showBackButton();
 }
-function openChapter(bookId, chapterNumber) {
+async function openChapter(bookId, chapterNumber) {
     console.log('🔍 فتح الفصل:', bookId, chapterNumber);
     
     const book = state.books.find(b => b.id == bookId);
@@ -436,9 +481,42 @@ function openChapter(bookId, chapterNumber) {
         alert('الفصل غير موجود');
         return;
     }
-    
+
+    // إذا الصفحات فارغة، حمّلها من API
+    if (!chapter.pages || chapter.pages.length === 0) {
+        try {
+            console.log('🖼 جاري تحميل صفحات الفصل...');
+            
+            // عرض تحميل
+            const loadingMsg = document.createElement('div');
+            loadingMsg.innerHTML = '📖 جاري تحميل الصفحات...';
+            loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
+            document.body.appendChild(loadingMsg);
+
+            // جلب الصور من API
+            const pagesResponse = await fetch(
+                `https://api.mangadex.org/at-home/server/${chapter.chapterId}`
+            );
+            const pagesData = await pagesResponse.json();
+            document.body.removeChild(loadingMsg);
+
+            // حفظ الصور في الفصل
+            chapter.pages = pagesData.chapter.data.map(page => 
+                `${pagesData.baseUrl}/data/${pagesData.chapter.hash}/${page}`
+            );
+
+            console.log('✅ تم تحميل', chapter.pages.length, 'صفحة');
+            
+        } catch (error) {
+            console.error('❌ خطأ في تحميل الصفحات:', error);
+            alert('حدث خطأ في تحميل الصفحات');
+            return;
+        }
+    }
+
     console.log('📖 الفصل:', chapter);
     
+    // عرض الصفحات
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
@@ -460,7 +538,7 @@ function openChapter(bookId, chapterNumber) {
             <div class="chapter-header">
                 <h2>${book.title} - الفصل ${chapter.number}</h2>
                 <p class="muted">${chapter.title}</p>
-                <button class="back-to-chapters-btn btn">
+                <button class="back-to-chapters-btn btn" onclick="showMangaChapters(${book.id})">
                     ← العودة للفصول
                 </button>
             </div>
@@ -469,11 +547,6 @@ function openChapter(bookId, chapterNumber) {
             </div>
         </div>
     `;
-    
-    // أضف event listener للزر الجديد
-    view.querySelector('.back-to-chapters-btn').addEventListener('click', function() {
-        showMangaChapters(bookId);
-    });
     
     document.getElementById('content').appendChild(view);
     showBackButton();
@@ -530,53 +603,3 @@ document.addEventListener('DOMContentLoaded', function() {
 // عندما ترجع للرئيسية: hideBackButton()
 
 // ===== نظام عرض فصول المانغا =====
-function showMangaChapters(bookId) {
-    console.log('🔍 جاري فتح فصول الكتاب رقم:', bookId);
-    
-    // البحث عن الكتاب
-    const book = state.books.find(b => b.id == bookId);
-    
-    if (!book) {
-        alert('❌ الكتاب غير موجود');
-        return;
-    }
-    
-    // تحقق من وجود الفصول
-    if (!book.chapters || !Array.isArray(book.chapters)) {
-        alert('❌ لا توجد فصول متاحة');
-        return;
-    }
-    
-    console.log('✅ وجدنا الكتاب:', book.title);
-    console.log('📖 عدد الفصول:', book.chapters.length);
-    
-    // إنشاء واجهة الفصول
-    hideAllViews();
-    const view = document.createElement('div');
-    view.className = 'view';
-    view.id = 'mangaChaptersView';
-    
-    let chaptersHTML = '';
-    book.chapters.forEach(ch => {
-        chaptersHTML += `
-            <div class="chapter-item">
-                <button class="chapter-btn" onclick="openChapter(${book.id}, ${ch.number})">
-                    الفصل ${ch.number} - ${ch.title}
-                </button>
-            </div>
-        `;
-    });
-    
-    view.innerHTML = `
-        <div class="manga-chapters">
-            <h1>${book.title}</h1>
-            <p class="muted">اختر الفصل للقراءة</p>
-            <div class="chapters-list">
-                ${chaptersHTML}
-            </div>
-        </div>
-    `;
-    
-    document.getElementById('content').appendChild(view);
-    showBackButton();
-}
