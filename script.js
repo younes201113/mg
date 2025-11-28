@@ -375,6 +375,145 @@ function readManga(id) {
   
   document.getElementById('content').appendChild(mangaView);
 }
+/* ----- Mangalek Scraper Functions ----- */
+
+// دالة لاستخراج البيانات من HTML
+function extractDataFromHTML(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    return doc;
+}
+
+// البحث في Mangalek
+async function searchMangalek(mangaTitle) {
+    try {
+        const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=';
+        const searchUrl = `https://mangalek.com/search?q=${encodeURIComponent(mangaTitle)}`;
+        
+        const response = await fetch(proxyUrl + encodeURIComponent(searchUrl));
+        const html = await response.text();
+        const doc = extractDataFromHTML(html);
+        
+        const results = [];
+        // استخراج نتائج البحث (هذا مثال - قد تحتاج تعديل حسب هيكل الموقع)
+        const mangaElements = doc.querySelectorAll('.manga-item, .search-result-item');
+        
+        mangaElements.forEach(element => {
+            const titleElement = element.querySelector('h3, .title, a');
+            const linkElement = element.querySelector('a');
+            const imageElement = element.querySelector('img');
+            
+            if (titleElement && linkElement) {
+                results.push({
+                    title: titleElement.textContent.trim(),
+                    url: linkElement.href,
+                    image: imageElement ? imageElement.src : ''
+                });
+            }
+        });
+        
+        return results;
+    } catch (error) {
+        console.error('❌ خطأ في البحث:', error);
+        return [];
+    }
+}
+
+// جلب فصول المانغا
+async function getMangalekChapters(mangaUrl) {
+    try {
+        const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=';
+        const response = await fetch(proxyUrl + encodeURIComponent(mangaUrl));
+        const html = await response.text();
+        const doc = extractDataFromHTML(html);
+        
+        const chapters = [];
+        // استخراج الفصول (هذا مثال - قد تحتاج تعديل)
+        const chapterElements = doc.querySelectorAll('.chapter-list a, .episode-item');
+        
+        chapterElements.forEach(element => {
+            chapters.push({
+                title: element.textContent.trim(),
+                url: element.href,
+                number: extractChapterNumber(element.textContent)
+            });
+        });
+        
+        return chapters.reverse(); // عكس الترتيب ليكون من الأقدم للأحدث
+    } catch (error) {
+        console.error('❌ خطأ في جلب الفصول:', error);
+        return [];
+    }
+}
+
+// جلب صفحات الفصل
+async function getMangalekChapterPages(chapterUrl) {
+    try {
+        const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=';
+        const response = await fetch(proxyUrl + encodeURIComponent(chapterUrl));
+        const html = await response.text();
+        const doc = extractDataFromHTML(html);
+        
+        const pages = [];
+        // استخراج الصور (هذا مثال - قد تحتاج تعديل)
+        const imageElements = doc.querySelectorAll('.chapter-img, .reading-content img');
+        
+        imageElements.forEach(element => {
+            if (element.src) {
+                pages.push(element.src);
+            }
+        });
+        
+        return pages;
+    } catch (error) {
+        console.error('❌ خطأ في جلب الصفحات:', error);
+        return [];
+    }
+}
+
+// استخراج رقم الفصل من النص
+function extractChapterNumber(text) {
+    const match = text.match(/(\d+)/);
+    return match ? parseInt(match[1]) : 0;
+}
+
+// الدالة الرئيسية لتحميل المانغا من Mangalek
+async function loadMangaFromMangalek(mangaTitle) {
+    try {
+        console.log('🔍 جاري البحث في Mangalek عن:', mangaTitle);
+        
+        const loadingMsg = document.createElement('div');
+        loadingMsg.innerHTML = '🔎 جاري البحث في Mangalek...';
+        loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
+        document.body.appendChild(loadingMsg);
+
+        // البحث عن المانغا
+        const searchResults = await searchMangalek(mangaTitle);
+        if (searchResults.length === 0) {
+            throw new Error('لم أجد المانغا في Mangalek');
+        }
+
+        // أخذ أول نتيجة
+        const manga = searchResults[0];
+        console.log('✅ وجدت:', manga.title);
+
+        // جلب الفصول
+        const chapters = await getMangalekChapters(manga.url);
+        console.log('📖 عدد الفصول:', chapters.length);
+
+        document.body.removeChild(loadingMsg);
+
+        return {
+            title: manga.title,
+            url: manga.url,
+            chapters: chapters
+        };
+        
+    } catch (error) {
+        console.error('❌ خطأ في التحميل من Mangalek:', error);
+        throw error;
+    }
+}
 async function showMangaChapters(bookId) {
     console.log('🔍 جاري فتح فصول الكتاب رقم:', bookId);
     
@@ -384,40 +523,20 @@ async function showMangaChapters(bookId) {
         return;
     }
 
-    // إذا عندك mangaDexId، حمّل الفصول من API
-    if (book.mangaDexId && (!book.chapters || book.chapters.length === 0)) {
+    // إذا عندك mangalekUrl، حمّل من Mangalek
+    if (book.mangalekUrl && (!book.chapters || book.chapters.length === 0)) {
         try {
-            console.log('🚀 جاري تحميل الفصول من MangaDex...');
+            const mangaData = await loadMangaFromMangalek(book.title);
             
-            // عرض تحميل
-            const loadingMsg = document.createElement('div');
-            loadingMsg.innerHTML = '📖 جاري تحميل الفصول...';
-            loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
-            document.body.appendChild(loadingMsg);
-
-            // استخدام CORS proxy
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const apiUrl = `https://api.mangadex.org/manga/${book.mangaDexId}/feed?order[chapter]=asc&translatedLanguage[]=ar&limit=20`;
-            
-            // جلب الفصول من API مع Proxy
-            const chaptersResponse = await fetch(proxyUrl + apiUrl);
-            
-            const chaptersData = await chaptersResponse.json();
-            document.body.removeChild(loadingMsg);
-
-            if (!chaptersData.data || chaptersData.data.length === 0) {
-                throw new Error('لا توجد فصول مترجمة للعربية');
-            }
-
-            // حفظ الفصول في state مؤقتاً
-            book.chapters = chaptersData.data.map((chapter, index) => ({
-                number: index + 1,
-                title: chapter.attributes.title || `الفصل ${index + 1}`,
-                chapterId: chapter.id,
-                pages: []
+            // حفظ الفصول في state
+            book.chapters = mangaData.chapters.map((chapter, index) => ({
+                number: chapter.number || (index + 1),
+                title: chapter.title,
+                chapterUrl: chapter.url,
+                pages: [] // بتكون فارغة لحد ما يفتح الفصل
             }));
 
-            console.log('✅ تم تحميل', book.chapters.length, 'فصل');
+            console.log('✅ تم تحميل', book.chapters.length, 'فصل من Mangalek');
             
         } catch (error) {
             console.error('❌ خطأ في تحميل الفصول:', error);
@@ -435,7 +554,7 @@ async function showMangaChapters(bookId) {
     console.log('✅ وجدنا الكتاب:', book.title);
     console.log('📖 عدد الفصول:', book.chapters.length);
     
-    // إنشاء واجهة الفصول
+    // إنشاء واجهة الفصول (نفس الكود السابق)
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
@@ -480,32 +599,21 @@ async function openChapter(bookId, chapterNumber) {
         return;
     }
 
-    // إذا الصفحات فارغة، حمّلها من API
+    // إذا الصفحات فارغة، حمّلها من Mangalek
     if (!chapter.pages || chapter.pages.length === 0) {
         try {
-            console.log('🖼 جاري تحميل صفحات الفصل...');
+            console.log('🖼 جاري تحميل صفحات الفصل من Mangalek...');
             
-            // عرض تحميل
             const loadingMsg = document.createElement('div');
             loadingMsg.innerHTML = '📖 جاري تحميل الصفحات...';
             loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
             document.body.appendChild(loadingMsg);
 
-            // استخدام CORS proxy
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const apiUrl = `https://api.mangadex.org/at-home/server/${chapter.chapterId}`;
-            
-            // جلب الصور من API مع Proxy
-            const pagesResponse = await fetch(proxyUrl + apiUrl);
-            const pagesData = await pagesResponse.json();
+            const pages = await getMangalekChapterPages(chapter.chapterUrl);
             document.body.removeChild(loadingMsg);
 
-            // حفظ الصور في الفصل
-            chapter.pages = pagesData.chapter.data.map(page => 
-                `${pagesData.baseUrl}/data/${pagesData.chapter.hash}/${page}`
-            );
-
-            console.log('✅ تم تحميل', chapter.pages.length, 'صفحة');
+            chapter.pages = pages;
+            console.log('✅ تم تحميل', chapter.pages.length, 'صفحة من Mangalek');
             
         } catch (error) {
             console.error('❌ خطأ في تحميل الصفحات:', error);
@@ -516,7 +624,7 @@ async function openChapter(bookId, chapterNumber) {
 
     console.log('📖 الفصل:', chapter);
     
-    // عرض الصفحات
+    // عرض الصفحات (نفس الكود السابق)
     hideAllViews();
     const view = document.createElement('div');
     view.className = 'view';
