@@ -122,6 +122,24 @@
   "mangaDexId": "1b7eb3a9-3b8c-4a0a-9c6a-8d2c5e1f3a4b"
   },
   {
+  "id": 401,
+  "title": "ون بيس",
+  "author": "إييتشيرو أودا",
+  "type": "manga",
+  "cover": "https://via.placeholder.com/300x400/ff6b6b/ffffff?text=ون+بيس",
+  "rating": 4.9,
+  "mangalekUrl": "https://mangalek.com/manga/one-piece-ar"
+  },
+  {
+  "id": 402,
+  "title": "ناروتو",
+  "author": "ماساشي كيشيموتو",
+  "type": "manga", 
+  "cover": "https://via.placeholder.com/300x400/4ecdc4/ffffff?text=ناروتو",
+  "rating": 4.7,
+  "mangalekUrl": "https://mangalek.com/manga/naruto-ar"
+  },
+  {
     "id": 63,
     "title": "هاري بوتر وجماعة العنقاء",
     "author": "ج. ك. رولينج",
