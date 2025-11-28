@@ -113,6 +113,19 @@
     }
   },
   {
+  "id": 6,
+  "title": "العادات الذرية",
+  "author": "جيمس كلير", 
+  "type": "book",
+  "cover": "https://via.placeholder.com/200x300/2a0f40/ffffff?text=العادات+الذرية",
+  "rating": 4.8,
+  "pages": 320,
+  "files": {
+      "read": "https://drive.google.com/file/d/13bdtLlKUCKPwfLPP6cczqtTcWxscJIRi/view",
+      "download": "https://drive.google.com/uc?export=download&id=13bdtLlKUCKPwfLPP6cczqtTcWxscJIRi"
+    }
+  },
+  {
     "id": 63,
     "title": "هاري بوتر وجماعة العنقاء",
     "author": "ج. ك. رولينج",
