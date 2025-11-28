@@ -1,84 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Snoy — مكتبة الكتب والمانغا</title>
-  <meta name="google-site-verification" content="ccOqreB00UP5GWYM3RwQgxXXMZWDLWOEqLvd5niIg5o" />
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="left">
-      <button id="menuBtn" class="icon-btn">☰</button>
-      <a id="homeLogo" class="logo">Snoy</a>
-    </div>
-
-    <div class="center">
-      <input id="searchInput" placeholder="ابحث عن كتاب أو مانغا..." autocomplete="off">
-      <button id="searchBtn" class="small-btn">بحث</button>
-    </div>
-
-    <div class="right">
-      <button id="loginBtn" class="accent-btn">تسجيل الدخول</button>
-    </div>
-  </header>
-
-  <!-- Ads placeholder -->
-  <div class="ads-area" id="adsArea">
-    <!-- ضع كود AdSense هنا بعد الموافقة -->
-    <div class="ads-placeholder">إعلان Google هنا</div>
-  </div>
-
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar closed">
-    <nav>
-      <button class="side-btn" data-action="home">🏠 الرئيسية</button>
-      <button class="side-btn" data-action="books">📚 الكتب</button>
-      <button class="side-btn" data-action="manga">📖 المانغا</button>
-      <button class="side-btn" data-action="favorites">⭐ المفضلة</button>
-      <button class="side-btn" data-action="account">👤 حسابي</button>
-    </nav>
-  </aside>
-
-  <!-- Main content -->
-  <main id="content">
-    <section id="homeView" class="view">
-      <h1>أهلاً بك في Snoy</h1>
-      <p class="muted">اختر كتابًا أو مانغا من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
-      <div id="gridArea" class="grid"></div>
-    </section>
-
-    <!-- Book detail template (rendered by JS) -->
-    <section id="bookView" class="view hidden"></section>
-
-    <!-- Favorites view -->
-    <section id="favView" class="view hidden">
-      <h2>المفضلة</h2>
-      <div id="favGrid" class="grid"></div>
-    </section>
-
-    <!-- Account view -->
-    <section id="accountView" class="view hidden">
-      <h2>الحساب</h2>
-      <div class="account-card">
-        <p>المستخدم: <strong id="accountName">—</strong></p>
-        <button id="logoutBtn" class="small-btn">تسجيل الخروج</button>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <small>© Snoy — مكتبة الكتب والمانغا</small>
-  </footer>
-
-<script src="script.js"></script>
-
-<!-- ضعه قبل </body> -->
-<button id="backHomeBtn" class="back-home-btn" onclick="goBack()">
-  ← الرجوع
-</button>
-</body>
-</html>
