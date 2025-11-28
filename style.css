@@ -1,0 +1,248 @@
+:root{
+  --bg: #110225;
+  --panel: #1a0335;
+  --muted: #b8a2d6;
+  --accent: #7b2cbf;
+  --accent-dark:#4111A8;
+  --card: #15012b;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: 'Cairo', sans-serif;
+  background:var(--bg);
+  color:#fff;
+  min-height:100vh;
+}
+
+/* Topbar */
+.topbar{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 16px;
+  background:linear-gradient(90deg,var(--panel), #120027);
+  box-shadow:0 4px 18px rgba(107,47,239,0.12);
+}
+.topbar .logo{
+  font-weight:800;
+  font-size:20px;
+  color: #fff;
+  cursor:pointer;
+}
+.left, .center, .right {display:flex; align-items:center; gap:8px;}
+.center {flex:1; justify-content:center;}
+.topbar input{
+  width:60%;
+  max-width:720px;
+  background:#2a0f40;
+  border:1px solid rgba(255,255,255,0.03);
+  padding:10px 12px;
+  border-radius:10px;
+  color:#fff;
+}
+.small-btn, .icon-btn, .accent-btn{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:#fff;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.accent-btn{
+  background:var(--accent);
+  border:none;
+}
+.icon-btn{font-size:18px;padding:8px}
+
+/* Ads area */
+.ads-area{padding:10px 16px; display:flex; justify-content:center;}
+.ads-placeholder{
+  width:100%;
+  max-width:900px;
+  background:#2a0f40;
+  border-radius:8px;
+  padding:12px;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* Sidebar */
+.sidebar{
+  position:fixed;
+  top:64px;
+  right:0;
+  width:200px;
+  height:calc(100% - 64px);
+  background:var(--panel);
+  padding:18px 8px;
+  transition:transform .25s ease;
+  border-left:1px solid rgba(255,255,255,0.02);
+  z-index:40;
+}
+.sidebar.closed{transform:translateX(200px)}
+.side-btn{
+  width:100%;
+  text-align:right;
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  padding:12px 10px;
+  margin-bottom:6px;
+  font-size:16px;
+  cursor:pointer;
+  border-radius:8px;
+}
+.side-btn:hover{background:#3b176b;color:#fff}
+
+/* Main content */
+main{
+  margin-right:220px;
+  padding:24px;
+  min-height:calc(100vh - 140px);
+}
+.view h1{margin:6px 0 6px 0; text-align:center}
+.muted{color:var(--muted); text-align:center}
+
+/* Grid */
+.grid{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:18px}
+.book-card{
+  width:200px;
+  background:var(--card);
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.4);
+  cursor:pointer;
+}
+.book-card img{width:100%; height:270px; object-fit:cover; border-radius:8px}
+.book-card h3{font-size:16px;margin:8px 0 4px 0}
+.book-card p{color:var(--muted);font-size:13px;margin:0}
+
+/* Book view */
+.book-view{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+.book-view .cover{
+  width:320px;
+  height:420px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#2a0f40;
+}
+.controls{display:flex;gap:8px;margin-top:8px}
+.btn{background:var(--accent);border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer}
+.btn.alt{background:transparent;border:1px solid rgba(255,255,255,0.08)}
+.hidden{display:none}
+
+/* account card */
+.account-card{background:var(--card);padding:14px;border-radius:10px;max-width:420px}
+
+/* footer */
+.footer{padding:18px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,0.02);margin-top:20px}
+
+/* responsive */
+@media(max-width:880px){
+  .topbar input{width:60%}
+  main{margin-right:0;padding:12px}
+  .sidebar{display:none}
+}
+/* قارئ المانغا */
+.manga-reader {
+  background: #1a1a1a;
+  min-height: 100vh;
+  color: white;
+  text-align: center;
+}
+
+
+.manga-pages-container {
+  margin-top: 80px; /* علشان ما يختفي تحت الهيدر */
+}
+
+.manga-page {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 1. اشيل الكود القديم إذا موجود: */
+.back-home-btn {
+  /* احذف الكود القديم كامل */
+}
+
+/* 2. أضف الكود الجديد: */
+.back-home-btn {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(123, 44, 191, 0.4);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  display: none; /* مخفي افتراضيًا */
+}
+
+.back-home-btn:hover {
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(123, 44, 191, 0.5);
+}
+
+.back-home-btn.show {
+  display: block; /* يظهر فقط مع كلاس show */
+}
+
+/* نظام فصول المانغا */
+.manga-chapters {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.chapters-list {
+    margin-top: 20px;
+}
+
+.chapter-item {
+    margin-bottom: 10px;
+}
+
+.chapter-btn {
+    width: 100%;
+    background: var(--card);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: right;
+}
+
+.chapter-btn:hover {
+    background: var(--accent);
+    transform: translateX(-5px);
+}
+
+.chapter-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--panel);
+    border-radius: 10px;
+}
