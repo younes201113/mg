@@ -343,7 +343,6 @@ function openMangaDetail(manga) {
     `;
     renderComments(manga.id);
 }
-
 // دالة قراءة المانغا (تفتح في نفس الصفحة)
 function readManga(id) {
   const manga = state.books.find(b => b.id === id);
@@ -396,13 +395,12 @@ async function showMangaChapters(bookId) {
             loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
             document.body.appendChild(loadingMsg);
 
-            // جلب الفصول من API
-            const chaptersResponse = await fetch(
-                `https://api.mangadex.org/manga/${book.mangaDexId}/feed?` +
-                `order[chapter]=asc&` +
-                `translatedLanguage[]=ar&` +
-                `limit=20`
-            );
+            // استخدام CORS proxy
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = `https://api.mangadex.org/manga/${book.mangaDexId}/feed?order[chapter]=asc&translatedLanguage[]=ar&limit=20`;
+            
+            // جلب الفصول من API مع Proxy
+            const chaptersResponse = await fetch(proxyUrl + apiUrl);
             
             const chaptersData = await chaptersResponse.json();
             document.body.removeChild(loadingMsg);
@@ -415,15 +413,15 @@ async function showMangaChapters(bookId) {
             book.chapters = chaptersData.data.map((chapter, index) => ({
                 number: index + 1,
                 title: chapter.attributes.title || `الفصل ${index + 1}`,
-                chapterId: chapter.id, // حفظ الـ ID لتحميل الصور لاحقاً
-                pages: [] // بتكون فارغة لحد ما يفتح الفصل
+                chapterId: chapter.id,
+                pages: []
             }));
 
             console.log('✅ تم تحميل', book.chapters.length, 'فصل');
             
         } catch (error) {
             console.error('❌ خطأ في تحميل الفصول:', error);
-            alert('حدث خطأ في تحميل الفصول');
+            alert('حدث خطأ في تحميل الفصول: ' + error.message);
             return;
         }
     }
@@ -493,10 +491,12 @@ async function openChapter(bookId, chapterNumber) {
             loadingMsg.style.cssText = 'position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px; z-index:1000; color:black;';
             document.body.appendChild(loadingMsg);
 
-            // جلب الصور من API
-            const pagesResponse = await fetch(
-                `https://api.mangadex.org/at-home/server/${chapter.chapterId}`
-            );
+            // استخدام CORS proxy
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const apiUrl = `https://api.mangadex.org/at-home/server/${chapter.chapterId}`;
+            
+            // جلب الصور من API مع Proxy
+            const pagesResponse = await fetch(proxyUrl + apiUrl);
             const pagesData = await pagesResponse.json();
             document.body.removeChild(loadingMsg);
 
