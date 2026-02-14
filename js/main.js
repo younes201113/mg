@@ -141,7 +141,7 @@ function openBookModal(bookId) {
         readBtn.href = pdfUrl;
         readBtn.target = "_blank";      // يفتح في نافذة جديدة
         readBtn.rel = "noopener noreferrer"; // أمان
-        readBtn.onclick = null;          // يلغي أي onclick قديم
+        //readBtn.onclick = null;          // يلغي أي onclick قديم
     }
     
     // زر التحميل
@@ -270,13 +270,6 @@ function addCommentFromModal() {
 }
 
 // فتح PDF للقراءة
-function openPDF() {
-    if (!currentModalBook) return;
-    
-    document.querySelector('.modal-body').style.display = 'none';
-    document.getElementById('pdfViewerContainer').style.display = 'block';
-    document.getElementById('pdfViewer').src = currentModalBook.pdfUrl;
-}
 
 // إغلاق المودال
 function closePDF() {
