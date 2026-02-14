@@ -1,6 +1,8 @@
+// js/main.js
+
+// البيانات مباشرة من libraryData
 let currentData = libraryData;
 let currentModalBook = null;
-
 
 // عرض الكتب
 function renderBooks(filterCategory = 'الكل', searchTerm = '') {
@@ -63,7 +65,6 @@ function groupByCategory(items) {
         }
     });
     
-    // حذف المجموعات الفارغة
     return Object.fromEntries(
         Object.entries(groups).filter(([_, items]) => items.length > 0)
     );
@@ -88,14 +89,12 @@ function createBookCard(book) {
     `;
 }
 
-// فتح المودال مع تفاصيل الكتاب
+// فتح المودال
 function openBookModal(bookId) {
     const modal = document.getElementById('pdfModal');
     const modalTitle = document.getElementById('modalTitle');
     
-    // البحث عن الكتاب
     currentModalBook = [...currentData.books, ...currentData.manga].find(b => b.id === bookId);
-    
     if (!currentModalBook) return;
     
     modalTitle.textContent = currentModalBook.title;
@@ -106,21 +105,14 @@ function openBookModal(bookId) {
     document.getElementById('modalReadBtn').href = currentModalBook.pdfUrl;
     document.getElementById('modalDownloadBtn').href = currentModalBook.downloadUrl || currentModalBook.pdfUrl;
     
-    // تعبئة التصنيفات
+    // التصنيفات
     const tagsHtml = currentModalBook.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
     document.getElementById('modalTags').innerHTML = tagsHtml;
     
-    // تعبئة الوصف
-    document.querySelector('#modalDescription p').textContent = 
-        currentModalBook.description || 'لا يوجد وصف متاح';
+    // الوصف
+    document.querySelector('#modalDescription p').textContent = currentModalBook.description || 'لا يوجد وصف متاح';
     
-    // تحديث زر المفضلة
-    updateFavoriteButton();
-    
-    // تعبئة التعليقات
-    loadComments(currentModalBook.id);
-    
-    // إخفاء الـ PDF وإظهار التفاصيل
+    // إخفاء الـ PDF
     document.getElementById('pdfViewerContainer').style.display = 'none';
     document.querySelector('.modal-body').style.display = 'block';
     
@@ -142,87 +134,9 @@ function generateStars(rating) {
     return stars;
 }
 
-// تحديث زر المفضلة
-function updateFavoriteButton() {
-    const favBtn = document.getElementById('modalFavoriteBtn');
-    const isFav = isFavorite(currentModalBook.id);
-    
-    if (isFav) {
-        favBtn.classList.add('active');
-        favBtn.querySelector('span').textContent = 'في المفضلة';
-    } else {
-        favBtn.classList.remove('active');
-        favBtn.querySelector('span').textContent = 'أضف للمفضلة';
-    }
-}
-
-// التحقق من المفضلة
-function isFavorite(bookId) {
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    return favorites.includes(bookId);
-}
-
-// تبديل المفضلة من المودال
-function toggleFavoriteFromModal() {
-    if (!currentModalBook) return;
-    
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const index = favorites.indexOf(currentModalBook.id);
-    
-    if (index === -1) {
-        favorites.push(currentModalBook.id);
-    } else {
-        favorites.splice(index, 1);
-    }
-    
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    updateFavoriteButton();
-}
-
-// تحميل التعليقات
-function loadComments(bookId) {
-    const comments = JSON.parse(localStorage.getItem(`comments_${bookId}`)) || [];
-    const commentsList = document.getElementById('modalCommentsList');
-    
-    if (comments.length === 0) {
-        commentsList.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد</p>';
-        return;
-    }
-    
-    commentsList.innerHTML = comments.map(comment => `
-        <div class="modal-comment-item">
-            <div class="modal-comment-header">
-                <span class="modal-comment-author">${comment.author || 'زائر'}</span>
-                <span class="modal-comment-date">${new Date(comment.date).toLocaleDateString('ar-EG')}</span>
-            </div>
-            <div class="modal-comment-text">${comment.text}</div>
-        </div>
-    `).join('');
-}
-
-// إضافة تعليق من المودال
-function addCommentFromModal() {
-    if (!currentModalBook) return;
-    
-    const commentText = document.getElementById('modalCommentText').value;
-    if (!commentText.trim()) return;
-    
-    const comments = JSON.parse(localStorage.getItem(`comments_${currentModalBook.id}`)) || [];
-    comments.push({
-        author: 'زائر',
-        text: commentText,
-        date: new Date().toISOString()
-    });
-    
-    localStorage.setItem(`comments_${currentModalBook.id}`, JSON.stringify(comments));
-    document.getElementById('modalCommentText').value = '';
-    loadComments(currentModalBook.id);
-}
-
-// فتح PDF للقراءة
+// فتح PDF
 function openPDF() {
     if (!currentModalBook) return;
-    
     document.querySelector('.modal-body').style.display = 'none';
     document.getElementById('pdfViewerContainer').style.display = 'block';
     document.getElementById('pdfViewer').src = currentModalBook.pdfUrl;
@@ -243,7 +157,7 @@ function searchBooks() {
     renderBooks('الكل', searchTerm);
 }
 
-// أيقونات التصنيفات
+// أيقونات
 function getCategoryIcon(category) {
     const icons = {
         'كتب عربية': 'book',
@@ -264,38 +178,12 @@ function getCoverIcon(category) {
     return icons[category] || 'book';
 }
 
-// تقييم الكتاب
-function rateBook(bookId, rating) {
-    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
-    ratings.push(rating);
-    localStorage.setItem(`ratings_${bookId}`, JSON.stringify(ratings));
-    
-    // حساب متوسط التقييم
-    const average = ratings.reduce((a,b) => a + b, 0) / ratings.length;
-    
-    // تحديث واجهة النجوم
-    const stars = document.querySelectorAll('.rating-input i');
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.className = 'fas fa-star';
-        } else {
-            star.className = 'far fa-star';
-        }
-    });
-    
-    alert('شكراً على تقييمك!');
-}
-
-// الأحداث
+// تشغيل كل شي لما الصفحة تتحمل
 document.addEventListener('DOMContentLoaded', () => {
-    //loadData();
     renderBooks();
     
     // البحث
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', searchBooks);
-    }
+    document.getElementById('searchInput').addEventListener('input', searchBooks);
     
     // تصنيفات سريعة
     document.querySelectorAll('.category-tab').forEach(tab => {
@@ -312,14 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             document.querySelectorAll('.categories a').forEach(l => l.classList.remove('active'));
             e.target.closest('a').classList.add('active');
-            const category = e.target.closest('a').textContent.trim();
-            renderBooks(category);
+            renderBooks(e.target.closest('a').textContent.trim());
         });
     });
     
-    // إغلاق المودال عند الضغط على الـ X
-    const closeBtn = document.querySelector('.close-modal');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closePDF);
-    }
+    // إغلاق المودال
+    document.querySelector('.close-modal')?.addEventListener('click', closePDF);
 });
