@@ -1,103 +1,88 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Snoy Library</title>
-  <meta name="google-site-verification" content="ccOqreB00UP5GWYM3RwQgxXXMZWDLWOEqLvd5niIg5o" />
-  <link rel="stylesheet" href="style.css">
-  <script async
-  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2649889735922333"
-  crossorigin="anonymous">
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سنوي - كتب ومانغا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="left">
-      <button id="menuBtn" class="icon-btn">☰</button>
-      <a id="homeLogo" class="logo">Snoy</a>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">Snoy</a>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث عن كتب أو مانغا...">
+                <i class="fas fa-search"></i>
+            </div>
+            
+            <div>
+                <a href="admin/admin.html" style="color: #667eea; text-decoration: none;">
+                    <i class="fas fa-cog" style="font-size: 24px;"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>التصنيفات</h3>
+            <ul class="categories">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> الكل</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> كتب عربية</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> تاريخ</a></li>
+                <li><a href="#"><i class="fas fa-dragon"></i> روايات</a></li>
+                <li><a href="#"><i class="fas fa-paint-brush"></i> مانغا</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> الأكثر قراءة</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Ad Section -->
+            <div class="ad-section" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 30px;">
+                <p>📢 إعلان Google هنا</p>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1>أهلاً بك في Snoy</h1>
+                <p>اختر تصنيفاً من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active">الكل</button>
+                <button class="category-tab">كتب</button>
+                <button class="category-tab">روايات</button>
+                <button class="category-tab">مانغا</button>
+                <button class="category-tab">تاريخ</button>
+            </div>
+
+            <!-- Books Container -->
+            <div id="booksContainer"></div>
+        </main>
     </div>
 
-    <div class="center">
-      <input id="searchInput" placeholder="ابحث عن كتاب أو مانغا..." autocomplete="off">
-      <button id="searchBtn" class="small-btn">بحث</button>
+    <!-- PDF Modal -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="close-modal" onclick="closePDF()">&times;</button>
+            </div>
+            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+        </div>
     </div>
 
-    <div class="right">
-      <button id="loginBtn" class="accent-btn">تسجيل الدخول</button>
-    </div>
-  </header>
-
-  <!-- Ads placeholder -->
-  <!-- Ads area -->
-<div class="ads-area" id="adsArea">
-
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-2649889735922333"
-       data-ad-slot="1234567890"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
-
-</div>
-
-    <!-- ضع كود AdSense هنا بعد الموافقة -->
-    <div class="ads-placeholder">إعلان Google هنا</div>
-  </div>
-
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar closed">
-    <nav>
-      <button class="side-btn" data-action="home">🏠 الرئيسية</button>
-      <button class="side-btn" data-action="books">📚 الكتب</button>
-      <button class="side-btn" data-action="manga">📖 المانغا</button>
-      <button class="side-btn" data-action="favorites">⭐ المفضلة</button>
-      <button class="side-btn" data-action="account">👤 حسابي</button>
-    </nav>
-  </aside>
-
-  <!-- Main content -->
-  <main id="content">
-    <section id="homeView" class="view">
-      <h1>أهلاً بك في Snoy</h1>
-      <p class="muted">اختر كتابًا أو مانغا من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
-      <div id="gridArea" class="grid"></div>
-    </section>
-
-    <!-- Book detail template (rendered by JS) -->
-    <section id="bookView" class="view hidden"></section>
-
-    <!-- Favorites view -->
-    <section id="favView" class="view hidden">
-      <h2>المفضلة</h2>
-      <div id="favGrid" class="grid"></div>
-    </section>
-
-    <!-- Account view -->
-    <section id="accountView" class="view hidden">
-      <h2>الحساب</h2>
-      <div class="account-card">
-        <p>المستخدم: <strong id="accountName">—</strong></p>
-        <button id="logoutBtn" class="small-btn">تسجيل الخروج</button>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <small>© Snoy — مكتبة الكتب والمانغا</small>
-  </footer>
-
-<script src="script.js"></script>
-
-<!-- ضعه قبل </body> -->
-<button id="backHomeBtn" class="back-home-btn" onclick="goBack()">
-  ← الرجوع
-</button>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
