@@ -126,6 +126,7 @@ function openBookModal(bookId) {
     
     // روابط
     const pdfUrl = currentModalBook.pdfUrl;
+    console.log("الرابط الأصلي من البيانات:", pdfUrl);
     let downloadUrl = currentModalBook.downloadUrl || pdfUrl;
     
     if (pdfUrl.includes('drive.google.com')) {
