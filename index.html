@@ -58,24 +58,63 @@
 
     <!-- الفريم القديم اللي كان شغال -->
     <!-- الفريم الجديد بالأزرار -->
-<div class="modal" id="pdfModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle"></h3>
-            <button class="close-modal" onclick="closePDF()">&times;</button>
+    <!-- مودال تفاصيل الكتاب والقراءة -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content book-modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="modal-body" id="modalBody">
+                <div class="modal-grid">
+                    {/* الجانب الأيمن: صورة وأزرار */}
+                    <div class="modal-sidebar">
+                        <div class="modal-cover" id="modalCover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="modal-rating" id="modalRating"></div>
+                        <div class="modal-actions" id="modalActions">
+                            <button class="modal-btn modal-btn-read" onclick="showPdfViewer()">
+                                <i class="fas fa-book-open"></i> قراءة
+                            </button>
+                            <a href="#" id="modalDownloadBtn" download class="modal-btn modal-btn-download">
+                                <i class="fas fa-download"></i> تحميل
+                            </a>
+                            <button id="modalFavoriteBtn" class="modal-btn modal-btn-favorite" onclick="toggleFavorite()">
+                                <i class="fas fa-heart"></i> <span>أضف للمفضلة</span>
+                            </button>
+                        </div>
+                    </div>
+                    {/* الجانب الأيسر: تفاصيل وتعليقات */}
+                    <div class="modal-main">
+                        <div class="modal-tags" id="modalTags"></div>
+                        <div class="modal-description">
+                            <h4><i class="fas fa-info-circle"></i> عن الكتاب</h4>
+                            <p id="modalDescription"></p>
+                        </div>
+                        <div class="modal-comments-section">
+                            <h4><i class="fas fa-star"></i> التقييمات</h4>
+                            <div class="average-rating" id="averageRating"></div>
+                            <div class="rating-stars-input" id="ratingStars">
+                                {[...Array(5)].map((_, i) => <i key={i} class="far fa-star" onclick="rateBook({i+1})"></i>).join('')}
+                            </div>
+                            <h4><i class="fas fa-comments"></i> التعليقات</h4>
+                            <div class="add-comment">
+                                <textarea id="commentText" placeholder="اكتب تعليقك..." rows="2"></textarea>
+                                <button onclick="addComment()" class="btn-add-comment"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                            <div class="comments-list" id="commentsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* عارض PDF */}
+            <div class="pdf-viewer-container" id="pdfViewerContainer" style="display: none;">
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
         </div>
-        
-        <!-- الأزرار -->
-        <div class="modal-actions" style="padding: 10px 20px; display: flex; gap: 10px; border-bottom: 1px solid #eee;">
-            <a href="#" id="modalReadBtn" target="_blank" class="btn-read" style="display: none;">📖 قراءة في نافذة جديدة</a>
-            <a href="#" id="modalDownloadBtn" download class="btn-download">📥 تحميل</a>
-            <button id="modalFavoriteBtn" class="btn-favorite" onclick="toggleFavorite()">❤️ أضف للمفضلة</button>
-        </div>
-        
-        <!-- الفريم -->
-        <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
     </div>
-</div> 
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
