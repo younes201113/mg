@@ -9,7 +9,7 @@ const libraryData = {
             category: "رواية",
             tags: ["تاريخي", "عربي", "أدب"],
             rating: 4.5,
-            pdfUrl: "books/gharnata.pdf",
+            pdfUrl: "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/preview",
             cover: "covers/gharnata.jpg",
             description: "رواية تاريخية عن الأندلس..."
         },
