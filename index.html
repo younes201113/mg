@@ -72,17 +72,73 @@
     </div>
 
     <!-- PDF Modal -->
-    <div class="modal" id="pdfModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <button class="close-modal" onclick="closePDF()">&times;</button>
+<div class="modal" id="pdfModal">
+    <div class="modal-content book-modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="close-modal" onclick="closePDF()">&times;</button>
+        </div>
+        
+        <!-- محتوى المودال الجديد -->
+        <div class="modal-body" id="modalBody">
+            <div class="modal-grid">
+                <!-- الجانب الأيمن: صورة الغلاف والأزرار -->
+                <div class="modal-sidebar">
+                    <div class="modal-cover" id="modalCover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    
+                    <div class="modal-rating" id="modalRating">
+                        <!-- النجوم هنا -->
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <a href="#" id="modalReadBtn" target="_blank" class="modal-btn modal-btn-read">
+                            <i class="fas fa-book-open"></i> قراءة
+                        </a>
+                        <a href="#" id="modalDownloadBtn" download class="modal-btn modal-btn-download">
+                            <i class="fas fa-download"></i> تحميل
+                        </a>
+                        <button id="modalFavoriteBtn" class="modal-btn modal-btn-favorite" onclick="toggleFavoriteFromModal()">
+                            <i class="fas fa-heart"></i> <span>أضف للمفضلة</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- الجانب الأيسر: المعلومات والوصف والتعليقات -->
+                <div class="modal-main">
+                    <div class="modal-tags" id="modalTags"></div>
+                    
+                    <div class="modal-description" id="modalDescription">
+                        <h4><i class="fas fa-info-circle"></i> عن الكتاب</h4>
+                        <p></p>
+                    </div>
+                    
+                    <div class="modal-comments">
+                        <h4><i class="fas fa-comments"></i> التعليقات</h4>
+                        
+                        <!-- إضافة تعليق -->
+                        <div class="modal-add-comment">
+                            <textarea id="modalCommentText" placeholder="اكتب تعليقك..." rows="2"></textarea>
+                            <button onclick="addCommentFromModal()" class="modal-add-comment-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- قائمة التعليقات -->
+                        <div class="modal-comments-list" id="modalCommentsList">
+                            <!-- هنا تظهر التعليقات -->
+                        </div>
+                    </div>
+                </div>
             </div>
-            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+        </div>
+        
+        <!-- PDF Viewer (مخفي في البداية) -->
+        <div class="pdf-viewer-container" id="pdfViewerContainer" style="display: none;">
+            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
-
-    <script src="js/data.js"></script>
-    <script src="js/main.js"></script>
+</div>
 </body>
 </html>
