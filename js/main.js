@@ -23,7 +23,7 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     if (filterCategory !== 'الكل') {
         allItems = allItems.filter(item => 
             item.category === filterCategory || 
-            item.tags.includes(filterCategory)
+            (item.tags && item.tags.includes(filterCategory))
         );
     }
     
@@ -62,13 +62,15 @@ function groupByCategory(items) {
     };
     
     items.forEach(item => {
-        if (item.category === 'رواية') {
+        const cat = item.category;
+        
+        if (cat.includes('رواية')) {  // يمسك رواية وروايات
             groups['روايات'].push(item);
-        } else if (item.category === 'تاريخ') {
+        } else if (cat === 'تاريخ') {
             groups['تاريخ'].push(item);
-        } else if (item.category === 'مانغا') {
+        } else if (cat === 'مانغا') {
             groups['مانغا'].push(item);
-        } else if (item.tags.includes('سيرة')) {
+        } else if (item.tags && item.tags.includes('سيرة')) {
             groups['سير ذاتية'].push(item);
         } else {
             groups['كتب عربية'].push(item);
@@ -115,8 +117,22 @@ function openBookModal(bookId) {
     // تعبئة البيانات
     document.getElementById('modalCover').innerHTML = `<i class="fas fa-${getCoverIcon(currentModalBook.category)}"></i>`;
     document.getElementById('modalRating').innerHTML = generateStars(currentModalBook.rating);
-    document.getElementById('modalReadBtn').href = currentModalBook.pdfUrl;
-    document.getElementById('modalDownloadBtn').href = currentModalBook.downloadUrl || currentModalBook.pdfUrl;
+    
+    // تجهيز روابط Drive
+    const pdfUrl = currentModalBook.pdfUrl;
+    let downloadUrl = currentModalBook.downloadUrl || pdfUrl;
+    
+    // إذا كان رابط Drive، حوله لرابط تحميل مباشر
+    if (pdfUrl.includes('drive.google.com')) {
+        const fileId = pdfUrl.split('/d/')[1]?.split('/')[0];
+        if (fileId) {
+            downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        }
+    }
+    
+    document.getElementById('modalReadBtn').href = pdfUrl;
+    document.getElementById('modalDownloadBtn').href = downloadUrl;
+    document.getElementById('modalReadBtn').setAttribute('onclick', 'openPDF(); return false;');
     
     // تعبئة التصنيفات
     const tagsHtml = currentModalBook.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
@@ -131,6 +147,7 @@ function openBookModal(bookId) {
     
     // تعبئة التعليقات
     loadComments(currentModalBook.id);
+    updateRatingStars(currentModalBook.id);
     
     // إخفاء الـ PDF وإظهار التفاصيل
     document.getElementById('pdfViewerContainer').style.display = 'none';
@@ -231,6 +248,32 @@ function addCommentFromModal() {
     loadComments(currentModalBook.id);
 }
 
+// تحديث عرض النجوم
+function updateRatingStars(bookId) {
+    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
+    const avgRating = ratings.length > 0 
+        ? (ratings.reduce((a,b) => a + b, 0) / ratings.length).toFixed(1)
+        : currentModalBook.rating;
+    
+    const avgElement = document.getElementById('averageRating');
+    if (avgElement) {
+        avgElement.innerHTML = `متوسط التقييم: ${avgRating} (${ratings.length} تقييم)`;
+    }
+}
+
+// تقييم الكتاب
+function rateBook(rating) {
+    if (!currentModalBook) return;
+    
+    const bookId = currentModalBook.id;
+    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
+    ratings.push(rating);
+    localStorage.setItem(`ratings_${bookId}`, JSON.stringify(ratings));
+    
+    updateRatingStars(bookId);
+    alert(`شكراً على تقييمك: ${rating} نجوم`);
+}
+
 // فتح PDF للقراءة
 function openPDF() {
     if (!currentModalBook) return;
@@ -276,28 +319,6 @@ function getCoverIcon(category) {
     return icons[category] || 'book';
 }
 
-// تقييم الكتاب
-function rateBook(bookId, rating) {
-    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
-    ratings.push(rating);
-    localStorage.setItem(`ratings_${bookId}`, JSON.stringify(ratings));
-    
-    // حساب متوسط التقييم
-    const average = ratings.reduce((a,b) => a + b, 0) / ratings.length;
-    
-    // تحديث واجهة النجوم
-    const stars = document.querySelectorAll('.rating-input i');
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.className = 'fas fa-star';
-        } else {
-            star.className = 'far fa-star';
-        }
-    });
-    
-    alert('شكراً على تقييمك!');
-}
-
 // الأحداث
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
@@ -333,4 +354,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) {
         closeBtn.addEventListener('click', closePDF);
     }
+    
+    // إغلاق المودال عند الضغط خارج المحتوى
+    window.onclick = function(event) {
+        const modal = document.getElementById('pdfModal');
+        if (event.target == modal) {
+            closePDF();
+        }
+    };
 });
