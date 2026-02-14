@@ -11,28 +11,55 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <a href="#" class="logo">Snoy</a>
+            
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ابحث عن كتب...">
+                <input type="text" id="searchInput" placeholder="ابحث عن كتب أو مانغا...">
                 <i class="fas fa-search"></i>
+            </div>
+            
+            <div>
+                <i class="fas fa-user-circle" style="font-size: 30px; color: #667eea;"></i>
             </div>
         </div>
     </header>
 
+    <!-- Main Container -->
     <div class="container">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <h3>التصنيفات</h3>
-            <ul class="categories" id="categoryList"></ul>
+            <ul class="categories" id="categoryList">
+                <!-- هنا تظهر التصنيفات من JavaScript -->
+            </ul>
         </aside>
 
+        <!-- Main Content -->
         <main class="main-content">
+            <!-- Ad Section -->
+            <div class="ad-section">
+                <p>📢 إعلان Google هنا</p>
+            </div>
+
+            <!-- Welcome Section -->
             <div class="welcome-section">
                 <h1>أهلاً بك في Snoy</h1>
-                <p>اختر تصنيفاً أو استخدم البحث</p>
+                <p>اختر تصنيفاً من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
             </div>
-            <div id="booksContainer" class="books-grid"></div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="filterByCategory('الكل')">الكل</button>
+                <button class="category-tab" onclick="filterByCategory('رواية')">روايات</button>
+                <button class="category-tab" onclick="filterByCategory('تاريخ')">تاريخ</button>
+                <button class="category-tab" onclick="filterByCategory('مانغا')">مانغا</button>
+            </div>
+
+            <!-- Books Container -->
+            <div id="booksContainer"></div>
         </main>
     </div>
 
