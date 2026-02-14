@@ -6,7 +6,7 @@ const libraryData = {
             id: 1,
             title: "تأليفة غرناطة",
             author: "رضوى عاشور",
-            category:  "رواية",
+            category: "رواية",
             tags: ["تاريخي", "عربي", "أدب"],
             rating: 4.5,
             pdfUrl: "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/preview",
