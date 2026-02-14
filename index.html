@@ -1,27 +1,103 @@
-<!-- PDF Modal -->
-<div class="modal" id="pdfModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle"></h3>
-            <button class="close-modal" onclick="closePDF()">&times;</button>
-        </div>
-        
-        <!-- هنا التفاصيل القديمة البسيطة -->
-        <div class="modal-body" id="modalBody" style="padding: 20px;">
-            <div class="book-details">
-                <p><strong>الكاتب:</strong> <span id="modalAuthor"></span></p>
-                <p><strong>التقييم:</strong> <span id="modalRating"></span></p>
-                <p><strong>الوصف:</strong> <span id="modalDescription"></span></p>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سنوي - كتب ومانغا</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">Snoy</a>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث عن كتب أو مانغا...">
+                <i class="fas fa-search"></i>
             </div>
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <a href="#" id="modalReadBtn" target="_blank" class="btn-read">📖 قراءة</a>
-                <a href="#" id="modalDownloadBtn" download class="btn-download">📥 تحميل</a>
+            
+            <div>
+                <i class="fas fa-user-circle"></i>
             </div>
         </div>
-        
-        <!-- PDF Viewer (مخفي) -->
-        <div class="pdf-viewer-container" id="pdfViewerContainer" style="display: none; height: 500px;">
-            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0" style="width:100%; height:100%;"></iframe>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h3>التصنيفات</h3>
+            <ul class="categories">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> الكل</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> كتب عربية</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> تاريخ</a></li>
+                <li><a href="#"><i class="fas fa-dragon"></i> روايات</a></li>
+                <li><a href="#"><i class="fas fa-paint-brush"></i> مانغا</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> الأكثر قراءة</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Ad Section -->
+            <div class="ad-section">
+                <p>📢 إعلان Google هنا</p>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1>أهلاً بك في Snoy</h1>
+                <p>اختر تصنيفاً من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active">الكل</button>
+                <button class="category-tab">كتب</button>
+                <button class="category-tab">روايات</button>
+                <button class="category-tab">مانغا</button>
+                <button class="category-tab">تاريخ</button>
+            </div>
+
+            <!-- Books Container -->
+            <div id="booksContainer"></div>
+        </main>
+    </div>
+
+    <!-- PDF Modal -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="close-modal" onclick="closePDF()">&times;</button>
+            </div>
+            
+            <div class="modal-body" id="modalBody">
+                <div class="book-details">
+                    <p><strong>الكاتب:</strong> <span id="modalAuthor"></span></p>
+                    <p><strong>التقييم:</strong> <span id="modalRating"></span></p>
+                    <p><strong>الوصف:</strong> <span id="modalDescription"></span></p>
+                </div>
+                
+                <div class="modal-actions">
+                    <a href="#" id="modalReadBtn" target="_blank" class="btn-read">📖 قراءة</a>
+                    <a href="#" id="modalDownloadBtn" download class="btn-download">📥 تحميل</a>
+                </div>
+            </div>
+            
+            <!-- PDF Viewer -->
+            <div class="pdf-viewer-container" id="pdfViewerContainer">
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
-</div>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
