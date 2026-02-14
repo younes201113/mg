@@ -1,10 +1,8 @@
-// js/main.js
-
-let currentData = null;
+let currentData = libraryData;
 let currentModalBook = null;
 
 // تحميل البيانات
-function loadData() {
+function loadData() { ... }
     const saved = localStorage.getItem('libraryData');
     if (saved) {
         currentData = JSON.parse(saved);
