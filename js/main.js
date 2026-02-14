@@ -101,6 +101,7 @@ function createBookCard(book) {
 }
 
 // فتح المودال مع تفاصيل الكتاب
+// فتح المودال مع تفاصيل الكتاب
 function openBookModal(bookId) {
     const modal = document.getElementById('pdfModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -112,33 +113,66 @@ function openBookModal(bookId) {
     
     modalTitle.textContent = currentModalBook.title;
     
-    // تعبئة البيانات
-    document.getElementById('modalCover').innerHTML = `<i class="fas fa-${getCoverIcon(currentModalBook.category)}"></i>`;
-    document.getElementById('modalRating').innerHTML = generateStars(currentModalBook.rating);
-    document.getElementById('modalReadBtn').href = currentModalBook.pdfUrl;
-    document.getElementById('modalDownloadBtn').href = currentModalBook.downloadUrl || currentModalBook.pdfUrl;
+    // صورة الغلاف
+    const coverIcon = document.getElementById('modalCover');
+    if (coverIcon) {
+        coverIcon.innerHTML = `<i class="fas fa-${getCoverIcon(currentModalBook.category)}"></i>`;
+    }
     
-    // تعبئة التصنيفات
-    const tagsHtml = currentModalBook.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
-    document.getElementById('modalTags').innerHTML = tagsHtml;
+    // التقييم
+    const ratingEl = document.getElementById('modalRating');
+    if (ratingEl) {
+        ratingEl.innerHTML = generateStars(currentModalBook.rating);
+    }
     
-    // تعبئة الوصف
-    document.querySelector('#modalDescription p').textContent = 
-        currentModalBook.description || 'لا يوجد وصف متاح';
+    // روابط
+    const pdfUrl = currentModalBook.pdfUrl;
+    let downloadUrl = currentModalBook.downloadUrl || pdfUrl;
     
-    // تحديث زر المفضلة
-    updateFavoriteButton();
+    if (pdfUrl.includes('drive.google.com')) {
+        const fileId = pdfUrl.split('/d/')[1]?.split('/')[0];
+        if (fileId) {
+            downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        }
+    }
     
-    // تعبئة التعليقات
-    loadComments(currentModalBook.id);
+    const readBtn = document.getElementById('modalReadBtn');
+    if (readBtn) {
+        readBtn.href = pdfUrl;
+    }
+    
+    const downloadBtn = document.getElementById('modalDownloadBtn');
+    if (downloadBtn) {
+        downloadBtn.href = downloadUrl;
+    }
+    
+    // التصنيفات
+    const tagsEl = document.getElementById('modalTags');
+    if (tagsEl && currentModalBook.tags) {
+        tagsEl.innerHTML = currentModalBook.tags.map(tag => 
+            `<span class="modal-tag">${tag}</span>`
+        ).join('');
+    }
+    
+    // الوصف
+    const descEl = document.querySelector('#modalDescription p');
+    if (descEl) {
+        descEl.textContent = currentModalBook.description || 'لا يوجد وصف متاح';
+    }
     
     // إخفاء الـ PDF وإظهار التفاصيل
-    document.getElementById('pdfViewerContainer').style.display = 'none';
-    document.querySelector('.modal-body').style.display = 'block';
+    const viewerContainer = document.getElementById('pdfViewerContainer');
+    if (viewerContainer) {
+        viewerContainer.style.display = 'none';
+    }
+    
+    const modalBody = document.querySelector('.modal-body');
+    if (modalBody) {
+        modalBody.style.display = 'block';
+    }
     
     modal.classList.add('show');
 }
-
 // توليد النجوم
 function generateStars(rating) {
     let stars = '';
