@@ -23,7 +23,7 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     if (filterCategory !== 'الكل') {
         allItems = allItems.filter(item => 
             item.category === filterCategory || 
-            (item.tags && item.tags.includes(filterCategory))
+            item.tags.includes(filterCategory)
         );
     }
     
@@ -62,15 +62,13 @@ function groupByCategory(items) {
     };
     
     items.forEach(item => {
-        const cat = item.category;
-        
-        if (cat.includes('رواية')) {  // يمسك رواية وروايات
+        if (item.category === 'رواية') {
             groups['روايات'].push(item);
-        } else if (cat === 'تاريخ') {
+        } else if (item.category === 'تاريخ') {
             groups['تاريخ'].push(item);
-        } else if (cat === 'مانغا') {
+        } else if (item.category === 'مانغا') {
             groups['مانغا'].push(item);
-        } else if (item.tags && item.tags.includes('سيرة')) {
+        } else if (item.tags.includes('سيرة')) {
             groups['سير ذاتية'].push(item);
         } else {
             groups['كتب عربية'].push(item);
@@ -117,22 +115,8 @@ function openBookModal(bookId) {
     // تعبئة البيانات
     document.getElementById('modalCover').innerHTML = `<i class="fas fa-${getCoverIcon(currentModalBook.category)}"></i>`;
     document.getElementById('modalRating').innerHTML = generateStars(currentModalBook.rating);
-    
-    // تجهيز روابط Drive
-    const pdfUrl = currentModalBook.pdfUrl;
-    let downloadUrl = currentModalBook.downloadUrl || pdfUrl;
-    
-    // إذا كان رابط Drive، حوله لرابط تحميل مباشر
-    if (pdfUrl.includes('drive.google.com')) {
-        const fileId = pdfUrl.split('/d/')[1]?.split('/')[0];
-        if (fileId) {
-            downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-        }
-    }
-    
-    document.getElementById('modalReadBtn').href = pdfUrl;
-    document.getElementById('modalDownloadBtn').href = downloadUrl;
-    document.getElementById('modalReadBtn').setAttribute('onclick', 'openPDF(); return false;');
+    document.getElementById('modalReadBtn').href = currentModalBook.pdfUrl;
+    document.getElementById('modalDownloadBtn').href = currentModalBook.downloadUrl || currentModalBook.pdfUrl;
     
     // تعبئة التصنيفات
     const tagsHtml = currentModalBook.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
@@ -147,7 +131,6 @@ function openBookModal(bookId) {
     
     // تعبئة التعليقات
     loadComments(currentModalBook.id);
-    updateRatingStars(currentModalBook.id);
     
     // إخفاء الـ PDF وإظهار التفاصيل
     document.getElementById('pdfViewerContainer').style.display = 'none';
@@ -209,30 +192,14 @@ function toggleFavoriteFromModal() {
 }
 
 // تحميل التعليقات
-// تحميل التعليقات
 function loadComments(bookId) {
-    const commentsList = document.getElementById('modalCommentsList');
-    
-    // إذا العنصر مش موجود، اخرج من الدالة
-    if (!commentsList) return;
-    
     const comments = JSON.parse(localStorage.getItem(`comments_${bookId}`)) || [];
+    const commentsList = document.getElementById('modalCommentsList');
     
     if (comments.length === 0) {
         commentsList.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد</p>';
         return;
     }
-    
-    commentsList.innerHTML = comments.map(comment => `
-        <div class="modal-comment-item">
-            <div class="modal-comment-header">
-                <span class="modal-comment-author">${comment.author || 'زائر'}</span>
-                <span class="modal-comment-date">${new Date(comment.date).toLocaleDateString('ar-EG')}</span>
-            </div>
-            <div class="modal-comment-text">${comment.text}</div>
-        </div>
-    `).join('');
-}
     
     commentsList.innerHTML = comments.map(comment => `
         <div class="modal-comment-item">
@@ -262,32 +229,6 @@ function addCommentFromModal() {
     localStorage.setItem(`comments_${currentModalBook.id}`, JSON.stringify(comments));
     document.getElementById('modalCommentText').value = '';
     loadComments(currentModalBook.id);
-}
-
-// تحديث عرض النجوم
-function updateRatingStars(bookId) {
-    const avgElement = document.getElementById('averageRating');
-    if (!avgElement) return;
-    
-    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
-    const avgRating = ratings.length > 0 
-        ? (ratings.reduce((a,b) => a + b, 0) / ratings.length).toFixed(1)
-        : currentModalBook.rating;
-    
-    avgElement.innerHTML = `متوسط التقييم: ${avgRating} (${ratings.length} تقييم)`;
-}
-
-// تقييم الكتاب
-function rateBook(rating) {
-    if (!currentModalBook) return;
-    
-    const bookId = currentModalBook.id;
-    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
-    ratings.push(rating);
-    localStorage.setItem(`ratings_${bookId}`, JSON.stringify(ratings));
-    
-    updateRatingStars(bookId);
-    alert(`شكراً على تقييمك: ${rating} نجوم`);
 }
 
 // فتح PDF للقراءة
@@ -335,6 +276,28 @@ function getCoverIcon(category) {
     return icons[category] || 'book';
 }
 
+// تقييم الكتاب
+function rateBook(bookId, rating) {
+    const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
+    ratings.push(rating);
+    localStorage.setItem(`ratings_${bookId}`, JSON.stringify(ratings));
+    
+    // حساب متوسط التقييم
+    const average = ratings.reduce((a,b) => a + b, 0) / ratings.length;
+    
+    // تحديث واجهة النجوم
+    const stars = document.querySelectorAll('.rating-input i');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.className = 'fas fa-star';
+        } else {
+            star.className = 'far fa-star';
+        }
+    });
+    
+    alert('شكراً على تقييمك!');
+}
+
 // الأحداث
 document.addEventListener('DOMContentLoaded', () => {
     loadData();
@@ -370,12 +333,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeBtn) {
         closeBtn.addEventListener('click', closePDF);
     }
-    
-    // إغلاق المودال عند الضغط خارج المحتوى
-    window.onclick = function(event) {
-        const modal = document.getElementById('pdfModal');
-        if (event.target == modal) {
-            closePDF();
-        }
-    };
 });
