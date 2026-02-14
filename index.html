@@ -57,15 +57,25 @@
     </div>
 
     <!-- الفريم القديم اللي كان شغال -->
-    <div class="modal" id="pdfModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <button class="close-modal" onclick="closePDF()">&times;</button>
-            </div>
-            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+    <!-- الفريم الجديد بالأزرار -->
+<div class="modal" id="pdfModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="close-modal" onclick="closePDF()">&times;</button>
         </div>
+        
+        <!-- الأزرار -->
+        <div class="modal-actions" style="padding: 10px 20px; display: flex; gap: 10px; border-bottom: 1px solid #eee;">
+            <a href="#" id="modalReadBtn" target="_blank" class="btn-read" style="display: none;">📖 قراءة في نافذة جديدة</a>
+            <a href="#" id="modalDownloadBtn" download class="btn-download">📥 تحميل</a>
+            <button id="modalFavoriteBtn" class="btn-favorite" onclick="toggleFavorite()">❤️ أضف للمفضلة</button>
+        </div>
+        
+        <!-- الفريم -->
+        <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
     </div>
+</div> 
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
