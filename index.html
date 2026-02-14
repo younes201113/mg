@@ -32,9 +32,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3>التصنيفات</h3>
-            <ul class="categories" id="categoryList">
-                <!-- هنا تظهر التصنيفات من JavaScript -->
-            </ul>
+            <ul class="categories" id="categoryList"></ul>
         </aside>
 
         <!-- Main Content -->
@@ -51,16 +49,89 @@
             </div>
 
             <!-- Category Tabs -->
-            <div class="category-tabs">
-                <button class="category-tab active" onclick="filterByCategory('الكل')">الكل</button>
-                <button class="category-tab" onclick="filterByCategory('رواية')">روايات</button>
-                <button class="category-tab" onclick="filterByCategory('تاريخ')">تاريخ</button>
-                <button class="category-tab" onclick="filterByCategory('مانغا')">مانغا</button>
-            </div>
+            <div class="category-tabs" id="categoryTabs"></div>
 
             <!-- Books Container -->
             <div id="booksContainer"></div>
         </main>
+    </div>
+
+    <!-- PDF Modal -->
+    <div class="modal" id="pdfModal">
+        <div class="modal-content book-modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle"></h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body" id="modalBody">
+                <div class="modal-grid">
+                    <!-- الجانب الأيمن -->
+                    <div class="modal-sidebar">
+                        <div class="modal-cover" id="modalCover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        
+                        <div class="modal-rating" id="modalRating"></div>
+                        
+                        <div class="modal-actions">
+                            <a href="#" id="modalReadBtn" target="_blank" class="modal-btn modal-btn-read">
+                                <i class="fas fa-book-open"></i> قراءة
+                            </a>
+                            <a href="#" id="modalDownloadBtn" download class="modal-btn modal-btn-download">
+                                <i class="fas fa-download"></i> تحميل
+                            </a>
+                            <button id="modalFavoriteBtn" class="modal-btn modal-btn-favorite" onclick="toggleFavorite()">
+                                <i class="fas fa-heart"></i> <span>أضف للمفضلة</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- الجانب الأيسر -->
+                    <div class="modal-main">
+                        <div class="modal-tags" id="modalTags"></div>
+                        
+                        <div class="modal-description">
+                            <h4><i class="fas fa-info-circle"></i> عن الكتاب</h4>
+                            <p id="modalDescription"></p>
+                        </div>
+                        
+                        <!-- التقييم والتعليقات -->
+                        <div class="modal-comments">
+                            <h4><i class="fas fa-star"></i> التقييمات</h4>
+                            <div class="average-rating" id="averageRating"></div>
+                            
+                            <div class="rating-section">
+                                <p>قيم هذا الكتاب:</p>
+                                <div class="rating-stars-input" id="ratingStars">
+                                    <i class="far fa-star" onclick="rateBook(1)"></i>
+                                    <i class="far fa-star" onclick="rateBook(2)"></i>
+                                    <i class="far fa-star" onclick="rateBook(3)"></i>
+                                    <i class="far fa-star" onclick="rateBook(4)"></i>
+                                    <i class="far fa-star" onclick="rateBook(5)"></i>
+                                </div>
+                            </div>
+                            
+                            <h4><i class="fas fa-comments"></i> التعليقات</h4>
+                            
+                            <div class="add-comment">
+                                <textarea id="commentText" placeholder="اكتب تعليقك..." rows="3"></textarea>
+                                <button onclick="addComment()" class="btn-add-comment">
+                                    <i class="fas fa-paper-plane"></i> أضف تعليق
+                                </button>
+                            </div>
+                            
+                            <div class="comments-list" id="commentsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF Viewer -->
+            <div class="pdf-viewer-container" id="pdfViewerContainer" style="display: none;">
+                <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
+            </div>
+        </div>
     </div>
 
     <script src="js/data.js"></script>
