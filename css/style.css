@@ -356,3 +356,62 @@ body {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
+/* إضافة للـ style.css - زرين الكتاب */
+
+.book-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.book-card:hover .book-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-read, .btn-download {
+    flex: 1;
+    padding: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.btn-read {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-read:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-download {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-download:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.05);
+}
+
+/* تعديل بسيط في حقل التحميل */
+.book-meta {
+    margin-bottom: 5px;
+}
