@@ -68,7 +68,6 @@
 
             <div class="modal-body" id="modalBody">
                 <div class="modal-grid">
-                    {/* الجانب الأيمن: صورة وأزرار */}
                     <div class="modal-sidebar">
                         <div class="modal-cover" id="modalCover">
                             <i class="fas fa-book"></i>
@@ -86,7 +85,6 @@
                             </button>
                         </div>
                     </div>
-                    {/* الجانب الأيسر: تفاصيل وتعليقات */}
                     <div class="modal-main">
                         <div class="modal-tags" id="modalTags"></div>
                         <div class="modal-description">
@@ -97,7 +95,11 @@
                             <h4><i class="fas fa-star"></i> التقييمات</h4>
                             <div class="average-rating" id="averageRating"></div>
                             <div class="rating-stars-input" id="ratingStars">
-                                {[...Array(5)].map((_, i) => <i key={i} class="far fa-star" onclick="rateBook({i+1})"></i>).join('')}
+                             <i class="far fa-star" onclick="rateBook(1)"></i>
+                             <i class="far fa-star" onclick="rateBook(2)"></i>
+                             <i class="far fa-star" onclick="rateBook(3)"></i>
+                             <i class="far fa-star" onclick="rateBook(4)"></i>
+                             <i class="far fa-star" onclick="rateBook(5)"></i>
                             </div>
                             <h4><i class="fas fa-comments"></i> التعليقات</h4>
                             <div class="add-comment">
