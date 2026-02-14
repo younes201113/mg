@@ -50,10 +50,14 @@ function displayBooks(booksToShow) {
 }
 
 // فتح PDF في الفريم
+// فتح PDF في الفريم
 function openPDF(url, title) {
     const modal = document.getElementById('pdfModal');
     const viewer = document.getElementById('pdfViewer');
     const modalTitle = document.getElementById('modalTitle');
+    
+    // البحث عن الكتاب كامل عشان نعرض الأزرار
+    currentModalBook = books.find(b => b.pdfUrl === url || b.pdfUrl.includes(url.split('/').pop()));
     
     // لو الرابط من Drive
     if (url.includes('drive.google.com')) {
@@ -65,6 +69,28 @@ function openPDF(url, title) {
     
     modalTitle.textContent = title;
     viewer.src = url;
+    
+    // تجهيز روابط الأزرار
+    const readBtn = document.getElementById('modalReadBtn');
+    const downloadBtn = document.getElementById('modalDownloadBtn');
+    const favBtn = document.getElementById('modalFavoriteBtn');
+    
+    if (currentModalBook) {
+        readBtn.href = currentModalBook.pdfUrl;
+        readBtn.style.display = 'inline-flex';
+        
+        // رابط التحميل
+        if (currentModalBook.pdfUrl.includes('drive.google.com')) {
+            const fileId = currentModalBook.pdfUrl.split('/d/')[1]?.split('/')[0];
+            downloadBtn.href = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        } else {
+            downloadBtn.href = currentModalBook.pdfUrl;
+        }
+        
+        // تحديث زر المفضلة
+        updateFavoriteButton();
+    }
+    
     modal.classList.add('show');
 }
 
