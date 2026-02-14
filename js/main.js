@@ -1,6 +1,4 @@
 // js/main.js
-
-// البيانات مباشرة من libraryData
 let currentData = libraryData;
 let currentModalBook = null;
 
@@ -25,68 +23,26 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
         );
     }
     
-    // تجميع حسب التصنيفات
-    const grouped = groupByCategory(allItems);
-    
-    let html = '';
-    for (const [category, items] of Object.entries(grouped)) {
+    let html = '<div class="books-grid">';
+    allItems.forEach(book => {
         html += `
-            <h2 class="section-title"><i class="fas fa-${getCategoryIcon(category)}"></i> ${category}</h2>
-            <div class="books-grid">
-                ${items.map(item => createBookCard(item)).join('')}
-            </div>
-        `;
-    }
-    
-    container.innerHTML = html;
-}
-
-// تجميع حسب التصنيف
-function groupByCategory(items) {
-    const groups = {
-        'كتب عربية': [],
-        'روايات': [],
-        'تاريخ': [],
-        'مانغا': [],
-        'سير ذاتية': []
-    };
-    
-    items.forEach(item => {
-        if (item.category === 'رواية') {
-            groups['روايات'].push(item);
-        } else if (item.category === 'تاريخ') {
-            groups['تاريخ'].push(item);
-        } else if (item.category === 'مانغا') {
-            groups['مانغا'].push(item);
-        } else if (item.tags.includes('سيرة')) {
-            groups['سير ذاتية'].push(item);
-        } else {
-            groups['كتب عربية'].push(item);
-        }
-    });
-    
-    return Object.fromEntries(
-        Object.entries(groups).filter(([_, items]) => items.length > 0)
-    );
-}
-
-// إنشاء كارت الكتاب
-function createBookCard(book) {
-    return `
-        <div class="book-card" onclick="openBookModal(${book.id})">
-            <div class="book-cover">
-                <i class="fas fa-${getCoverIcon(book.category)}"></i>
-            </div>
-            <div class="book-info">
-                <h3 class="book-title">${book.title}</h3>
-                <div class="book-author">${book.author}</div>
-                <div class="book-meta">
-                    <span class="book-category">${book.category}</span>
-                    <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
+            <div class="book-card" onclick="openBookModal(${book.id})">
+                <div class="book-cover">
+                    <i class="fas fa-${getCoverIcon(book.category)}"></i>
+                </div>
+                <div class="book-info">
+                    <h3 class="book-title">${book.title}</h3>
+                    <div class="book-author">${book.author}</div>
+                    <div class="book-meta">
+                        <span class="book-category">${book.category}</span>
+                        <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
+    });
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 // فتح المودال
@@ -104,6 +60,7 @@ function openBookModal(bookId) {
     document.getElementById('modalRating').innerHTML = generateStars(currentModalBook.rating);
     document.getElementById('modalReadBtn').href = currentModalBook.pdfUrl;
     document.getElementById('modalDownloadBtn').href = currentModalBook.downloadUrl || currentModalBook.pdfUrl;
+    document.getElementById('modalReadBtn').setAttribute('onclick', 'openPDF(); return false;');
     
     // التصنيفات
     const tagsHtml = currentModalBook.tags.map(tag => `<span class="modal-tag">${tag}</span>`).join('');
@@ -112,11 +69,36 @@ function openBookModal(bookId) {
     // الوصف
     document.querySelector('#modalDescription p').textContent = currentModalBook.description || 'لا يوجد وصف متاح';
     
-    // إخفاء الـ PDF
+    // إخفاء الـ PDF وإظهار التفاصيل
     document.getElementById('pdfViewerContainer').style.display = 'none';
     document.querySelector('.modal-body').style.display = 'block';
     
-    modal.classList.add('show');
+    // إظهار المودال
+    modal.style.display = 'flex';
+}
+
+// فتح PDF للقراءة
+function openPDF() {
+    if (!currentModalBook) return;
+    
+    document.querySelector('.modal-body').style.display = 'none';
+    document.getElementById('pdfViewerContainer').style.display = 'block';
+    document.getElementById('pdfViewer').src = currentModalBook.pdfUrl;
+}
+
+// إغلاق المودال
+function closePDF() {
+    const modal = document.getElementById('pdfModal');
+    modal.style.display = 'none';
+    document.getElementById('pdfViewer').src = '';
+    document.querySelector('.modal-body').style.display = 'block';
+    document.getElementById('pdfViewerContainer').style.display = 'none';
+}
+
+// البحث
+function searchBooks() {
+    const searchTerm = document.getElementById('searchInput').value;
+    renderBooks('الكل', searchTerm);
 }
 
 // توليد النجوم
@@ -134,41 +116,7 @@ function generateStars(rating) {
     return stars;
 }
 
-// فتح PDF
-function openPDF() {
-    if (!currentModalBook) return;
-    document.querySelector('.modal-body').style.display = 'none';
-    document.getElementById('pdfViewerContainer').style.display = 'block';
-    document.getElementById('pdfViewer').src = currentModalBook.pdfUrl;
-}
-
-// إغلاق المودال
-function closePDF() {
-    const modal = document.getElementById('pdfModal');
-    modal.classList.remove('show');
-    document.getElementById('pdfViewer').src = '';
-    document.querySelector('.modal-body').style.display = 'block';
-    document.getElementById('pdfViewerContainer').style.display = 'none';
-}
-
-// البحث
-function searchBooks() {
-    const searchTerm = document.getElementById('searchInput').value;
-    renderBooks('الكل', searchTerm);
-}
-
 // أيقونات
-function getCategoryIcon(category) {
-    const icons = {
-        'كتب عربية': 'book',
-        'روايات': 'book-open',
-        'تاريخ': 'landmark',
-        'مانغا': 'dragon',
-        'سير ذاتية': 'user'
-    };
-    return icons[category] || 'book';
-}
-
 function getCoverIcon(category) {
     const icons = {
         'رواية': 'book-open',
@@ -178,7 +126,12 @@ function getCoverIcon(category) {
     return icons[category] || 'book';
 }
 
-// تشغيل كل شي لما الصفحة تتحمل
+// تبديل المفضلة
+function toggleFavoriteFromModal() {
+    alert('مش هتشتغل دلوقتي');
+}
+
+// الأحداث
 document.addEventListener('DOMContentLoaded', () => {
     renderBooks();
     
@@ -204,6 +157,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // إغلاق المودال
-    document.querySelector('.close-modal')?.addEventListener('click', closePDF);
+    // إغلاق المودال عند الضغط خارج المحتوى
+    window.onclick = function(event) {
+        const modal = document.getElementById('pdfModal');
+        if (event.target == modal) {
+            closePDF();
+        }
+    };
 });
