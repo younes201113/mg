@@ -80,10 +80,11 @@ function groupByCategory(items) {
     );
 }
 
-// إنشاء كارت الكتاب
+// js/main.js - تحديث دالة createBookCard
+
 function createBookCard(book) {
     return `
-        <div class="book-card" onclick="openPDF('${book.pdfUrl}', '${book.title}')">
+        <div class="book-card">
             <div class="book-cover">
                 <i class="fas fa-${getCoverIcon(book.category)}"></i>
             </div>
@@ -94,13 +95,26 @@ function createBookCard(book) {
                     <span class="book-category">${book.category}</span>
                     <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
                 </div>
+                
+                <!-- الأزرار الجديدة -->
+                <div class="book-actions">
+                    <button onclick="openPDF('${book.pdfUrl}', '${book.title}')" class="btn-read">
+                        <i class="fas fa-book-open"></i> قراءة
+                    </button>
+                    <a href="${book.pdfUrl}" download class="btn-download" onclick="event.stopPropagation()">
+                        <i class="fas fa-download"></i> تحميل
+                    </a>
+                </div>
             </div>
         </div>
     `;
 }
 
-// فتح PDF
-function openPDF(pdfUrl, title) {
+// تحديث دالة openPDF لمنع انتشار الحدث
+function openPDF(pdfUrl, title, event) {
+    if (event) {
+        event.stopPropagation();
+    }
     const modal = document.getElementById('pdfModal');
     const viewer = document.getElementById('pdfViewer');
     const modalTitle = document.getElementById('modalTitle');
