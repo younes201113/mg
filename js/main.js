@@ -23,25 +23,36 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
         );
     }
     
-    let html = '<div class="books-grid">';
-    allItems.forEach(book => {
+    // ترتيب حسب ID
+    allItems.sort((a, b) => a.id - b.id);
+    
+    // تجميع حسب التصنيف
+    const grouped = groupByCategory(allItems);
+    
+    let html = '';
+    for (const [category, items] of Object.entries(grouped)) {
         html += `
-            <div class="book-card" onclick="openBookModal(${book.id})">
-                <div class="book-cover">
-                    <i class="fas fa-${getCoverIcon(book.category)}"></i>
-                </div>
-                <div class="book-info">
-                    <h3 class="book-title">${book.title}</h3>
-                    <div class="book-author">${book.author}</div>
-                    <div class="book-meta">
-                        <span class="book-category">${book.category}</span>
-                        <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
+            <h2 class="section-title"><i class="fas fa-${getCategoryIcon(category)}"></i> ${category}</h2>
+            <div class="books-grid">
+                ${items.map(book => `
+                    <div class="book-card" onclick="openBookModal(${book.id})">
+                        <div class="book-cover">
+                            <i class="fas fa-${getCoverIcon(book.category)}"></i>
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">${book.title}</h3>
+                            <div class="book-author">${book.author}</div>
+                            <div class="book-meta">
+                                <span class="book-category">${book.category}</span>
+                                <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                `).join('')}
             </div>
         `;
-    });
-    html += '</div>';
+    }
+    
     container.innerHTML = html;
 }
 
