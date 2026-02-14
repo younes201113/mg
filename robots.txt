@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://snoylibrary.onrender.com/sitemap.xml
