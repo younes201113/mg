@@ -101,7 +101,6 @@ function createBookCard(book) {
 }
 
 // فتح المودال مع تفاصيل الكتاب
-// فتح المودال مع تفاصيل الكتاب
 function openBookModal(bookId) {
     const modal = document.getElementById('pdfModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -136,11 +135,16 @@ function openBookModal(bookId) {
         }
     }
     
+    // زر القراءة (يفتح في نافذة جديدة)
     const readBtn = document.getElementById('modalReadBtn');
     if (readBtn) {
         readBtn.href = pdfUrl;
+        readBtn.target = "_blank";      // يفتح في نافذة جديدة
+        readBtn.rel = "noopener noreferrer"; // أمان
+        readBtn.onclick = null;          // يلغي أي onclick قديم
     }
     
+    // زر التحميل
     const downloadBtn = document.getElementById('modalDownloadBtn');
     if (downloadBtn) {
         downloadBtn.href = downloadUrl;
