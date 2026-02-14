@@ -2,40 +2,6 @@
 let currentData = libraryData;
 let currentModalBook = null;
 
-// دالة تجميع الكتب حسب التصنيف
-function groupByCategory(items) {
-    const groups = {
-        'روايات': [],
-        'تاريخ': [],
-        'مانغا': [],
-        'كتب عربية': [],
-        'سير ذاتية': []
-    };
-    
-    items.forEach(item => {
-        if (item.category === 'رواية') {
-            groups['روايات'].push(item);
-        } else if (item.category === 'تاريخ') {
-            groups['تاريخ'].push(item);
-        } else if (item.category === 'مانغا') {
-            groups['مانغا'].push(item);
-        } else if (item.tags && item.tags.includes('سيرة')) {
-            groups['سير ذاتية'].push(item);
-        } else {
-            groups['كتب عربية'].push(item);
-        }
-    });
-    
-    // حذف المجموعات الفارغة
-    const result = {};
-    for (const [key, value] of Object.entries(groups)) {
-        if (value.length > 0) {
-            result[key] = value;
-        }
-    }
-    return result;
-}
-
 // عرض الكتب
 function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     const container = document.getElementById('booksContainer');
@@ -45,7 +11,7 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     if (filterCategory !== 'الكل') {
         allItems = allItems.filter(item => 
             item.category === filterCategory || 
-            item.tags.includes(filterCategory)
+            (item.tags && item.tags.includes(filterCategory))
         );
     }
     
@@ -60,36 +26,28 @@ function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     // ترتيب حسب ID
     allItems.sort((a, b) => a.id - b.id);
     
-    // تجميع حسب التصنيف
-    const grouped = groupByCategory(allItems);
-    
-    let html = '';
-    for (const [category, items] of Object.entries(grouped)) {
+    // عرض الكتب بشكل بسيط
+    let html = '<div class="books-grid">';
+    allItems.forEach(book => {
         html += `
-            <h2 class="section-title"><i class="fas fa-${getCategoryIcon(category)}"></i> ${category}</h2>
-            <div class="books-grid">
-                ${items.map(book => `
-                    <div class="book-card" onclick="openBookModal(${book.id})">
-                        <div class="book-cover">
-                            <i class="fas fa-${getCoverIcon(book.category)}"></i>
-                        </div>
-                        <div class="book-info">
-                            <h3 class="book-title">${book.title}</h3>
-                            <div class="book-author">${book.author}</div>
-                            <div class="book-meta">
-                                <span class="book-category">${book.category}</span>
-                                <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
-                            </div>
-                        </div>
+            <div class="book-card" onclick="openBookModal(${book.id})">
+                <div class="book-cover">
+                    <i class="fas fa-${getCoverIcon(book.category)}"></i>
+                </div>
+                <div class="book-info">
+                    <h3 class="book-title">${book.title}</h3>
+                    <div class="book-author">${book.author}</div>
+                    <div class="book-meta">
+                        <span class="book-category">${book.category}</span>
+                        <span class="book-rating"><i class="fas fa-star"></i> ${book.rating}</span>
                     </div>
-                `).join('')}
+                </div>
             </div>
         `;
-    }
-    
+    });
+    html += '</div>';
     container.innerHTML = html;
 }
-
 // فتح المودال
 function openBookModal(bookId) {
     const modal = document.getElementById('pdfModal');
