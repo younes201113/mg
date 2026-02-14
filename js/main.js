@@ -2,6 +2,40 @@
 let currentData = libraryData;
 let currentModalBook = null;
 
+// دالة تجميع الكتب حسب التصنيف
+function groupByCategory(items) {
+    const groups = {
+        'روايات': [],
+        'تاريخ': [],
+        'مانغا': [],
+        'كتب عربية': [],
+        'سير ذاتية': []
+    };
+    
+    items.forEach(item => {
+        if (item.category === 'رواية') {
+            groups['روايات'].push(item);
+        } else if (item.category === 'تاريخ') {
+            groups['تاريخ'].push(item);
+        } else if (item.category === 'مانغا') {
+            groups['مانغا'].push(item);
+        } else if (item.tags && item.tags.includes('سيرة')) {
+            groups['سير ذاتية'].push(item);
+        } else {
+            groups['كتب عربية'].push(item);
+        }
+    });
+    
+    // حذف المجموعات الفارغة
+    const result = {};
+    for (const [key, value] of Object.entries(groups)) {
+        if (value.length > 0) {
+            result[key] = value;
+        }
+    }
+    return result;
+}
+
 // عرض الكتب
 function renderBooks(filterCategory = 'الكل', searchTerm = '') {
     const container = document.getElementById('booksContainer');
