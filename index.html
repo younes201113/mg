@@ -11,115 +11,30 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-content">
             <a href="#" class="logo">Snoy</a>
-            
             <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ابحث عن كتب أو مانغا...">
+                <input type="text" id="searchInput" placeholder="ابحث عن كتب...">
                 <i class="fas fa-search"></i>
-            </div>
-            
-            <div>
-                <a href="admin/admin.html" style="color: #667eea; text-decoration: none;">
-                    <i class="fas fa-cog" style="font-size: 24px;"></i>
-                </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Container -->
     <div class="container">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <h3>التصنيفات</h3>
-            <ul class="categories">
-                <li><a href="#" class="active"><i class="fas fa-home"></i> الكل</a></li>
-                <li><a href="#"><i class="fas fa-book"></i> كتب عربية</a></li>
-                <li><a href="#"><i class="fas fa-history"></i> تاريخ</a></li>
-                <li><a href="#"><i class="fas fa-dragon"></i> روايات</a></li>
-                <li><a href="#"><i class="fas fa-paint-brush"></i> مانغا</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> الأكثر قراءة</a></li>
-            </ul>
+            <ul class="categories" id="categoryList"></ul>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Ad Section -->
-            <div class="ad-section">
-                <p>📢 إعلان Google هنا</p>
-            </div>
-
-            <!-- Welcome Section -->
             <div class="welcome-section">
                 <h1>أهلاً بك في Snoy</h1>
-                <p>اختر تصنيفاً من القائمة الجانبية أو استخدم البحث للعثور على ما تريد.</p>
+                <p>اختر تصنيفاً أو استخدم البحث</p>
             </div>
-
-            <!-- Category Tabs -->
-            <div class="category-tabs">
-                <button class="category-tab active">الكل</button>
-                <button class="category-tab">كتب</button>
-                <button class="category-tab">روايات</button>
-                <button class="category-tab">مانغا</button>
-                <button class="category-tab">تاريخ</button>
-            </div>
-
-            <!-- Books Container -->
-            <div id="booksContainer"></div>
+            <div id="booksContainer" class="books-grid"></div>
         </main>
     </div>
-
-    <!-- PDF Modal -->
-<div class="modal" id="pdfModal">
-    <div class="modal-content book-modal-content">
-        <div class="modal-header">
-            <h3 id="modalTitle"></h3>
-            <button class="close-modal" onclick="closePDF()">&times;</button>
-        </div>
-        
-        <div class="modal-body" id="modalBody">
-            <div class="modal-grid">
-                <!-- الجانب الأيمن -->
-                <div class="modal-sidebar">
-                    <div class="modal-cover" id="modalCover">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    
-                    <div class="modal-rating" id="modalRating"></div>
-                    
-                    <div class="modal-actions">
-                        <a href="#" id="modalReadBtn" target="_blank" class="modal-btn modal-btn-read" onclick="openPDF(); return false;">
-                            <i class="fas fa-book-open"></i> قراءة
-                        </a>
-                        <a href="#" id="modalDownloadBtn" download class="modal-btn modal-btn-download">
-                            <i class="fas fa-download"></i> تحميل
-                        </a>
-                        <button id="modalFavoriteBtn" class="modal-btn modal-btn-favorite" onclick="toggleFavoriteFromModal()">
-                            <i class="fas fa-heart"></i> <span>أضف للمفضلة</span>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- الجانب الأيسر -->
-                <div class="modal-main">
-                    <div class="modal-tags" id="modalTags"></div>
-                    
-                    <div class="modal-description" id="modalDescription">
-                        <h4><i class="fas fa-info-circle"></i> عن الكتاب</h4>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- PDF Viewer -->
-        <div class="pdf-viewer-container" id="pdfViewerContainer" style="display: none;">
-            <iframe class="pdf-viewer" id="pdfViewer" frameborder="0"></iframe>
-        </div>
-    </div>
- </div>
 
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>
