@@ -1,16 +1,6 @@
 let currentData = libraryData;
 let currentModalBook = null;
 
-// تحميل البيانات
-function loadData() { ... }
-    const saved = localStorage.getItem('libraryData');
-    if (saved) {
-        currentData = JSON.parse(saved);
-    } else {
-        currentData = libraryData;
-    }
-    renderBooks();
-}
 
 // عرض الكتب
 function renderBooks(filterCategory = 'الكل', searchTerm = '') {
@@ -298,7 +288,8 @@ function rateBook(bookId, rating) {
 
 // الأحداث
 document.addEventListener('DOMContentLoaded', () => {
-    loadData();
+    //loadData();
+    renderBooks();
     
     // البحث
     const searchInput = document.getElementById('searchInput');
