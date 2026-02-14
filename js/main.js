@@ -209,14 +209,30 @@ function toggleFavoriteFromModal() {
 }
 
 // تحميل التعليقات
+// تحميل التعليقات
 function loadComments(bookId) {
-    const comments = JSON.parse(localStorage.getItem(`comments_${bookId}`)) || [];
     const commentsList = document.getElementById('modalCommentsList');
+    
+    // إذا العنصر مش موجود، اخرج من الدالة
+    if (!commentsList) return;
+    
+    const comments = JSON.parse(localStorage.getItem(`comments_${bookId}`)) || [];
     
     if (comments.length === 0) {
         commentsList.innerHTML = '<p class="no-comments">لا توجد تعليقات بعد</p>';
         return;
     }
+    
+    commentsList.innerHTML = comments.map(comment => `
+        <div class="modal-comment-item">
+            <div class="modal-comment-header">
+                <span class="modal-comment-author">${comment.author || 'زائر'}</span>
+                <span class="modal-comment-date">${new Date(comment.date).toLocaleDateString('ar-EG')}</span>
+            </div>
+            <div class="modal-comment-text">${comment.text}</div>
+        </div>
+    `).join('');
+}
     
     commentsList.innerHTML = comments.map(comment => `
         <div class="modal-comment-item">
@@ -250,15 +266,15 @@ function addCommentFromModal() {
 
 // تحديث عرض النجوم
 function updateRatingStars(bookId) {
+    const avgElement = document.getElementById('averageRating');
+    if (!avgElement) return;
+    
     const ratings = JSON.parse(localStorage.getItem(`ratings_${bookId}`)) || [];
     const avgRating = ratings.length > 0 
         ? (ratings.reduce((a,b) => a + b, 0) / ratings.length).toFixed(1)
         : currentModalBook.rating;
     
-    const avgElement = document.getElementById('averageRating');
-    if (avgElement) {
-        avgElement.innerHTML = `متوسط التقييم: ${avgRating} (${ratings.length} تقييم)`;
-    }
+    avgElement.innerHTML = `متوسط التقييم: ${avgRating} (${ratings.length} تقييم)`;
 }
 
 // تقييم الكتاب
