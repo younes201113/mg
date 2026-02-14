@@ -278,9 +278,21 @@ function openPDF() {
 function closePDF() {
     const modal = document.getElementById('pdfModal');
     modal.classList.remove('show');
-    document.getElementById('pdfViewer').src = '';
-    document.querySelector('.modal-body').style.display = 'block';
-    document.getElementById('pdfViewerContainer').style.display = 'none';
+    
+    const pdfViewer = document.getElementById('pdfViewer');
+    if (pdfViewer) {
+        pdfViewer.src = '';
+    }
+    
+    const viewerContainer = document.getElementById('pdfViewerContainer');
+    if (viewerContainer) {
+        viewerContainer.style.display = 'none';
+    }
+    
+    const modalBody = document.querySelector('.modal-body');
+    if (modalBody) {
+        modalBody.style.display = 'block';
+    }
 }
 
 // البحث
