@@ -20,7 +20,7 @@ const libraryData = {
             category: "رواية",
             tags: ["خيال", "مغامرة", "عربي"],
             rating: 4.8,
-            pdfUrl: "books/zikola.pdf",
+            pdfUrl: "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/preview",
             cover: "covers/zikola.jpg",
             description: "قصة مثيرة في عالم موازي..."
         },
@@ -31,7 +31,7 @@ const libraryData = {
             category: "تاريخ",
             tags: ["تاريخ", "أوروبا", "عصور وسطى"],
             rating: 4.3,
-            pdfUrl: "books/europe-history.pdf",
+            pdfUrl: "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/preview",
             cover: "covers/europe.jpg",
             description: "دراسة شاملة لتاريخ أوروبا..."
         }
@@ -45,7 +45,7 @@ const libraryData = {
             category: "مانغا",
             tags: ["شونين", "أكشن", "مدرسي"],
             rating: 4.7,
-            pdfUrl: "manga/elite-class.pdf",
+            pdfUrl: "https://drive.google.com/file/d/11X-a1GDf3l2TIa4ZKVw2F0myRfWkQOSl/preview",
             cover: "manga/elite.jpg",
             description: "طلاب نخبة في مدرسة خاصة..."
         }
