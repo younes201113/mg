@@ -378,3 +378,15 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn.addEventListener('click', closePDF);
     }
 });
+// دالة مخصصة لفتح الرابط الأصلي من البيانات
+function openOriginalPdfLink(bookId) {
+    // البحث عن الكتاب في البيانات الأصلية (مش currentData)
+    const originalBook = [...libraryData.books, ...libraryData.manga].find(b => b.id === bookId);
+    
+    if (originalBook && originalBook.pdfUrl) {
+        // افتح الرابط الأصلي في نافذة جديدة
+        window.open(originalBook.pdfUrl, '_blank');
+    } else {
+        alert("عذراً، رابط الكتاب غير موجود");
+    }
+}
