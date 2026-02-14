@@ -28,7 +28,7 @@ function displayBooks(booksToShow) {
             <h2 class="section-title"><i class="fas fa-${getIcon(category)}"></i> ${category}</h2>
             <div class="books-grid">
                 ${items.map(book => `
-                    <div class="book-card" onclick="openPDF('${book.pdfUrl}', '${book.title}')">
+                    <div class="book-card" onclick="openBookDetails(${book.id})">
                         <div class="book-cover">
                             <i class="fas fa-${getIcon(book.category)}"></i>
                         </div>
@@ -183,3 +183,6 @@ window.onclick = function(event) {
         closePDF();
     }
 };
+function openBookDetails(id) {
+    window.location.href = `book.html?id=${id}`;
+}
