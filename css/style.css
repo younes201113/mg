@@ -1041,3 +1041,74 @@ body {
         gap: 15px;
     }
 }
+/* ===== التعديلات النهائية للتمركز ===== */
+
+/* تأكد إن الحاوية الرئيسية متمركزة */
+.container {
+    max-width: 1400px !important;
+    margin: 30px auto !important;
+    padding: 0 30px !important;
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 30px !important;
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
+/* شبكة الكتب */
+.books-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+    gap: 25px !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    margin: 30px 0 !important;
+}
+
+/* بطاقة الكتاب */
+.book-card {
+    width: 100% !important;
+    max-width: 250px !important;
+    margin: 0 auto !important;
+}
+
+/* عنوان التصنيف */
+.section-title {
+    text-align: right !important;
+    margin-right: 10px !important;
+}
+
+/* المودال */
+.modal-content {
+    max-width: 900px !important;
+    width: 95% !important;
+    margin: 20px auto !important;
+}
+
+.modal-actions {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 15px !important;
+    flex-wrap: wrap !important;
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px !important;
+    }
+    
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        gap: 15px !important;
+    }
+    
+    .book-card {
+        max-width: 200px !important;
+    }
+}
