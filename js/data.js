@@ -54,7 +54,7 @@ const libraryData = {
             tags: ["تاريخ", "أوروبا", "عصور وسطى"],
             rating: 4.3,
             pdfUrl: "https://drive.google.com/file/d/1j7kWkmLnZbpppTwwaknFDxQ5f6PS-i0o/preview",
-            cover: "covers/europe.jpg",
+            cover: "https://ketabpedia.com/wp-content/uploads/2019/03/bmh2708.jpg",
             description: "كتاب للمؤرخ نورمان ديفيز يقدّم عرضًا واسعًا لتاريخ القارة الأوروبية مع تركيز كبير على منطقة أوروبا الوسطى، ويتتبع تطور الشعوب والدول من العصور القديمة مرورًا بالوسطى والحديثة وصولًا إلى القرن العشرين، مع إبراز التداخل بين السياسة والدين والثقافة والحروب وتأثيرها في تشكيل هوية المنطقة."
         }
     ],
